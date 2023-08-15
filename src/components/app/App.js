@@ -1,7 +1,10 @@
-import './App.css';
+import Main from "../main/Main";
+import "./App.css";
 
-function App() {
-  return <div className='app'>Learn React</div>;
+export default function App() {
+  return (
+    <div className="app">
+      <Main />
+    </div>
+  );
 }
-
-export default App;
