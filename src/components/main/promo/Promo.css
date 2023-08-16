@@ -58,6 +58,12 @@
   font-weight: 500;
   line-height: 16px;
   color: rgba(255, 255, 255, 1);
+
+  transition: opacity 0.3s ease-in;
+}
+
+.promo__btn-more:hover {
+  opacity: 0.8;
 }
 
 .promo__image {

@@ -22,4 +22,18 @@ const TECHNOLOGIES = [
   },
 ];
 
-export { TECHNOLOGIES };
+const PROJECTS_LIST = [
+  {
+    name: "Статичный сайт",
+    url: "https://maxlivi1.github.io/how-to-learn/"
+  },
+  {
+    name: "Адаптивный сайт",
+    url: "https://maxlivi1.github.io/russian-travel/"
+  },
+  {
+    name: "Одностраничное приложение",
+    url: "https://maxlivi.students.nomoredomains.xyz"
+  },
+];
+export { TECHNOLOGIES, PROJECTS_LIST };

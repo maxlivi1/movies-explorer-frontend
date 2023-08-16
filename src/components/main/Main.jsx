@@ -3,6 +3,7 @@ import AboutProject from "./about-project/AboutProject";
 import Promo from "./promo/Promo";
 import Techs from "./techs/Techs";
 import AboutMe from "./about-me/AboutMe";
+import Portfolio from "./portfolio/Portfolio";
 
 export default function Main() {
   return (
@@ -11,6 +12,7 @@ export default function Main() {
       <AboutProject />
       <Techs />
       <AboutMe />
+      <Portfolio />
     </main>
   );
 }
