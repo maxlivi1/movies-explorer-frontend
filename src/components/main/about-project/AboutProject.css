@@ -4,3 +4,95 @@
   box-sizing: border-box;
   background-color: rgba(32, 32, 32, 1);
 }
+
+.about-project__stages {
+  margin: 0;
+  padding: 70px 0 110px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 40px;
+}
+
+.about-project__stage {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 26px;
+}
+
+.about-project__stage-title {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  letter-spacing: -0.8px;
+}
+
+.about-project__stage-description {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px;
+}
+
+.about-project__stages-grid {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  display: grid;
+  grid-template-columns: minmax(228px, 1fr) 4fr;
+  grid-template-rows: auto;
+  justify-items: center;
+  row-gap: 14px;
+}
+
+.about-project__period {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  justify-self: stretch;
+  min-height: 36px;
+
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.about-project__period_style_green {
+  background: #3DDC84;
+  color: #000;
+}
+
+.about-project__period_style_black {
+  background: #303030;
+  color: rgba(255, 255, 255, 1);
+}
+
+.about-project__sphere {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 17px;
+  color: rgba(139, 139, 139, 1);
+}
