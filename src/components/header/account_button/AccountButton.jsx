@@ -1,12 +1,18 @@
 import "./AccountButton.css";
 import { Link } from "react-router-dom";
+import { useLocation } from "react-router-dom";
+import { ROUTES } from "../../../utils/constants";
 
 export default function AccountButton({ loggedIn }) {
-  const style = loggedIn ? "account-button account-button_visible" : "account-button";
+  const location = useLocation();
+  const pathname = location.pathname;
+  const style =
+    pathname === ROUTES.main ? "account-button__image" : "account-button__image account-button__image_place_main"
+
   return (
-    <button type="button" className={style}>
+    loggedIn && (<Link to={ROUTES.profile} className="account-button">
       <span className="account-button__name">Аккаунт</span>
-      <div className="account-button__image">
+      <div className={style}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="12"
@@ -21,6 +27,6 @@ export default function AccountButton({ loggedIn }) {
           />
         </svg>
       </div>
-    </button>
+    </Link>)
   );
 }

@@ -1,5 +1,6 @@
 import "./Navigation.css";
 import { Link } from "react-router-dom";
+import { ROUTES } from "../../../utils/constants";
 
 export default function Navigation({ loggedIn }) {
   const style = loggedIn ? "navigation navigation_authorized" : "navigation";
@@ -8,13 +9,24 @@ export default function Navigation({ loggedIn }) {
     <nav className={style}>
       {loggedIn ? (
         <>
-          <a className="navigation__link">Фильмы</a>
-          <a className="navigation__link">Сохранённые Фильмы</a>
+          <Link to={ROUTES.movies} className="navigation__link">
+            Фильмы
+          </Link>
+          <Link to={ROUTES.savedMovies} className="navigation__link">
+            Сохранённые Фильмы
+          </Link>
         </>
       ) : (
         <>
-          <a className="navigation__link-registration">Регистрация</a>
-          <a className="navigation__link-in">Войти</a>
+          <Link
+            to={ROUTES.registration}
+            className="navigation__link-registration"
+          >
+            Регистрация
+          </Link>
+          <Link to={ROUTES.login} className="navigation__link-in">
+            Войти
+          </Link>
         </>
       )}
     </nav>

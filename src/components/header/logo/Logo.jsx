@@ -1,9 +1,10 @@
 import "./Logo.css";
 import { Link } from "react-router-dom";
+import { ROUTES } from "../../../utils/constants";
 
 export default function Logo() {
   return (
-    <a className="logo" href="#" noopener target={"_blank"}>
+    <Link to={ROUTES.main} className="logo">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="38"
@@ -21,6 +22,6 @@ export default function Logo() {
           />
         </g>
       </svg>
-    </a>
+    </Link>
   );
 }

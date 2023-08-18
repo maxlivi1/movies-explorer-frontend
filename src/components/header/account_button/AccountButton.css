@@ -2,18 +2,12 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  display: none;
+  display: flex;
   justify-content: center;
   align-items: center;
-  outline: none;
-  border: none;
+  text-decoration: none;
   gap: 13px;
-  background: transparent;
   cursor: pointer;
-}
-
-.account-button_visible {
-  display: flex;
 }
 
 .account-button__name {
@@ -40,4 +34,8 @@
   height: 30px;
   border-radius: 6px;
   background: #0f4157;
+}
+
+.account-button__image_place_main {
+  background: rgba(49, 49, 49, 1);
 }

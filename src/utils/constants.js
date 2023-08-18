@@ -36,4 +36,14 @@ const PROJECTS_LIST = [
     url: "https://maxlivi.students.nomoredomains.xyz"
   },
 ];
-export { TECHNOLOGIES, PROJECTS_LIST };
+
+const ROUTES = {
+  main: "/",
+  movies: "/movies",
+  savedMovies: "/saved-movies",
+  registration: "/signup",
+  login: "/signin",
+  profile: "/profile",
+  notFound: "*",
+}
+export { TECHNOLOGIES, PROJECTS_LIST, ROUTES };
