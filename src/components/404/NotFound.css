@@ -50,3 +50,26 @@
 .not-found__home:hover {
   opacity: 0.7;
 }
+
+@media (max-width: 1023px) {
+  .not-found {
+    padding: 408px 0 0;
+  }
+}
+
+@media (max-width: 500px) {
+  .not-found {
+    padding: 329px 10px 0;
+  }
+  .not-found__title {
+    font-size: 80px;
+  }
+  .not-found__text {
+    margin: 10px 0 0;
+    font-size: 12px;
+  }
+  .not-found__home {
+    margin: 284px 0 0;
+    font-size: 12px;
+  }
+}

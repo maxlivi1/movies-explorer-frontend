@@ -69,20 +69,18 @@
   justify-self: stretch;
   min-height: 36px;
 
+  background: #303030;
+  color: rgba(255, 255, 255, 1);
+
   font-size: 14px;
   font-style: normal;
   font-weight: 400;
   line-height: normal;
 }
 
-.about-project__period_style_green {
-  background: #3DDC84;
+.about-project__period:first-of-type {
+  background: #3ddc84;
   color: #000;
-}
-
-.about-project__period_style_black {
-  background: #303030;
-  color: rgba(255, 255, 255, 1);
 }
 
 .about-project__sphere {
@@ -95,4 +93,57 @@
   font-weight: 500;
   line-height: 17px;
   color: rgba(139, 139, 139, 1);
+}
+
+@media (max-width: 1023px) {
+  .about-project {
+    padding: 90px 50px;
+  }
+  .about-project__stages {
+    padding: 70px 0 93px;
+    gap: 30px;
+  }
+  .about-project__stage {
+    gap: 22px;
+  }
+  .about-project__stage-description {
+    font-size: 12px;
+    line-height: 18px;
+  }
+  .about-project__stages-grid {
+    grid-template-columns: minmax(140px, 1fr) 4fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .about-project {
+    padding: 70px 18px 69px;
+  }
+  .about-project__stages {
+    padding: 60px 0;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 56px;
+  }
+  .about-project__stage {
+    gap: 16px;
+  }
+  .about-project__stage-title {
+    font-size: 18px;
+    letter-spacing: -0.72px;
+  }
+  .about-project__stage-description {
+    font-size: 11px;
+    line-height: 16px;
+  }
+  .about-project__stages-grid {
+    grid-template-columns: minmax(100px, 1fr) 4fr;
+  }
+  .about-project__period {
+    min-height: 35px;
+    font-size: 11px;
+  }
+  .about-project__sphere {
+    font-size: 11px;
+  }
 }

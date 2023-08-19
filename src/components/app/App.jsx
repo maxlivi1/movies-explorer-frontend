@@ -8,7 +8,7 @@ import NotFound from "../404/NotFound";
 import "./App.css";
 
 export default function App() {
-  const [loggedIn, setLoggedIn] = useState(true);
+  const [loggedIn, setLoggedIn] = useState(false);
   return (
     <div className="app">
       <Header loggedIn={loggedIn} />

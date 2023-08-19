@@ -28,8 +28,8 @@ export default function AboutProject() {
         </div>
       </div>
       <div className="about-project__stages-grid">
-        <div className="about-project__period about-project__period_style_green">1 неделя</div>
-        <div className="about-project__period about-project__period_style_black">4 недели</div>
+        <div className="about-project__period">1 неделя</div>
+        <div className="about-project__period">4 недели</div>
         <span className="about-project__sphere">Back-end</span>
         <span className="about-project__sphere">Front-end</span>
       </div>

@@ -99,3 +99,69 @@
   object-fit: cover;
   object-position: center;
 }
+
+@media (max-width: 1023px) {
+  .about-me {
+    padding: 90px 50px;
+  }
+  .about-me__info {
+    max-width: 364px;
+  }
+  .about-me__title {
+    font-size: 40px;
+    line-height: 40px;
+    letter-spacing: -1.6px;
+  }
+  .about-me__subtitle {
+    margin: 16px 0 0;
+    font-size: 12px;
+    line-height: 18px;
+  }
+  .about-me__description {
+    margin: 20px 0 0;
+    font-size: 12px;
+    line-height: 18px;
+  }
+  .about-me__link {
+    margin: 87px 0 0;
+  }
+  .about-me__wrapper {
+    width: 255px;
+    height: 307px;
+  }
+}
+
+@media (max-width: 600px) {
+  .about-me {
+    padding: 70px 14px;
+  }
+  .about-me__content {
+    margin: 60px 0 0;
+    flex-direction: column-reverse;
+    gap: 40px;
+  }
+  .about-me__info {
+    gap: 20px;
+  }
+  .about-me__title {
+    font-size: 30px;
+    letter-spacing: -1.2px;
+  }
+  .about-me__subtitle {
+    margin: 0;
+    font-size: 11px;
+    line-height: 16px;
+  }
+  .about-me__description {
+    margin: 0;
+    font-size: 11px;
+    line-height: 16px;
+  }
+  .about-me__link {
+    margin: 40px 0 0;
+  }
+  .about-me__wrapper {
+    width: 292px;
+    height: 352px;
+  }
+}

@@ -16,3 +16,12 @@
   line-height: normal;
   letter-spacing: -0.56px;
 }
+
+@media (max-width: 1023px) {
+  .techs__card {
+    width: 84px;
+    height: 57px;
+    font-size: 12px;
+    letter-spacing: -0.48px;
+  }
+}
