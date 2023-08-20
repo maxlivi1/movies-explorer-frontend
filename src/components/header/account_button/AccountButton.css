@@ -10,6 +10,10 @@
   cursor: pointer;
 }
 
+.account-button_place_mobile {
+  margin: auto 0 0;
+}
+
 .account-button__name {
   margin: 0;
   padding: 8px 0;
@@ -38,4 +42,16 @@
 
 .account-button__image_place_main {
   background: rgba(49, 49, 49, 1);
+}
+
+@media (max-width: 768px) {
+  .account-button {
+    display: none;
+  }
+  .account-button_place_mobile {
+    display: flex;
+  }
+  .account-button__image {
+    background: rgba(49, 49, 49, 1);
+  }
 }

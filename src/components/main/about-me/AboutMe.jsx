@@ -21,8 +21,8 @@ export default function AboutMe() {
           <a
             className="about-me__link"
             href="https://github.com/MaxLiVi1"
-            noopener
             target="__blank"
+            rel="noreferrer"
           >
             Github
           </a>

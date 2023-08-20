@@ -1,11 +1,12 @@
 import Logo from "./logo/Logo";
 import "./Header.css";
 import AccountButton from "./account_button/AccountButton";
-import Navigation from "./navigation/Navigation";
+import Navigation from "../navigation/Navigation";
 import { useLocation } from "react-router-dom";
 import { ROUTES } from "../../utils/constants";
+import BurgerMenu from "./burger-menu/BurgerMenu";
 
-export default function Header({ loggedIn }) {
+export default function Header({ loggedIn, openMobileMenu, isOpenMenu }) {
   const location = useLocation();
   const pathname = location.pathname;
   const isVisible =
@@ -19,7 +20,10 @@ export default function Header({ loggedIn }) {
       <header className={style}>
         <Logo />
         <Navigation loggedIn={loggedIn} />
-        <AccountButton loggedIn={loggedIn} />
+        {!isOpenMenu && (
+          <AccountButton loggedIn={loggedIn} isOpenMenu={isOpenMenu} />
+        )}
+        <BurgerMenu loggedIn={loggedIn} onClick={openMobileMenu} />
       </header>
     )
   );

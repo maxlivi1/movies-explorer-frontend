@@ -11,7 +11,7 @@ export default function Logo() {
         height="38"
         fill="none"
       >
-        <g fill-rule="evenodd" clip-rule="evenodd">
+        <g fillRule="evenodd" clipRule="evenodd">
           <path
             fill="#3DDC84"
             d="M19 38c10.493 0 19-8.507 19-19S29.493 0 19 0 0 8.507 0 19s8.507 19 19 19Z"

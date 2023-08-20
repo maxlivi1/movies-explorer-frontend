@@ -1,0 +1,27 @@
+.header__burger-menu {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  width: 44px;
+  height: 44px;
+  background-color: transparent;
+  outline: none;
+  border: none;
+  cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  .header__burger-menu {
+    display: flex;
+  }
+}
+
+@media (max-width: 600px) {
+  .header__burger-menu {
+    width: 40px;
+    height: 43px;
+  }
+}

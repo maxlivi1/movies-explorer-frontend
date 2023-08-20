@@ -7,9 +7,11 @@ export default function ProjectCard({ name, url }) {
       <a
         className="portfolio__project-link"
         href={url}
-        noopener
         target="__blank"
-      >↗</a>
+        rel="noreferrer"
+      >
+        ↗
+      </a>
     </li>
   );
 }
