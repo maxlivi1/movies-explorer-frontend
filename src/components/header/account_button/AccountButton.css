@@ -8,6 +8,8 @@
   text-decoration: none;
   gap: 13px;
   cursor: pointer;
+
+  transition: opacity 0.3s ease;
 }
 
 .account-button_place_mobile {
@@ -38,6 +40,10 @@
   height: 30px;
   border-radius: 6px;
   background: #0f4157;
+}
+
+.account-button:hover {
+  opacity: 0.7;
 }
 
 .account-button__image_place_main {

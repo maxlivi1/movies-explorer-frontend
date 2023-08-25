@@ -7,10 +7,28 @@ import Main from "../main/Main";
 import NotFound from "../404/NotFound";
 import "./App.css";
 import MobileMenu from "../mobileMenu/MobileMenu";
+import Movies from "../movies/Movies";
+import {
+  moviesSearchList,
+  // moviesEmptyList,
+  moviesSavedList,
+} from "../../utils/data";
 
 export default function App() {
+  const getIdList = (list) => {
+    const idList = [];
+    list.forEach((movie) => {
+      idList.push(movie.cardId);
+    });
+    return idList;
+  };
   const [loggedIn, setLoggedIn] = useState(true);
   const [isOpenMenu, setIsOpenMenu] = useState(false);
+  const [savedCardsIdList, setSavedCardsIdList] = useState(
+    getIdList(moviesSavedList)
+  );
+  const moviesList = moviesSearchList;
+  const moviesSaved = moviesSavedList;
 
   const openMobileMenu = () => {
     setIsOpenMenu(true);
@@ -28,6 +46,16 @@ export default function App() {
       />
       <Routes>
         <Route path={ROUTES.main} element={<Main />} />
+        <Route
+          path={ROUTES.movies}
+          element={
+            <Movies movies={moviesList} savedCardsIdList={savedCardsIdList} />
+          }
+        ></Route>
+        <Route
+          path={ROUTES.savedMovies}
+          element={<Movies movies={moviesSaved} buttonType={"saved"} />}
+        ></Route>
         <Route path={ROUTES.notFound} element={<NotFound />} />
       </Routes>
       <Footer />

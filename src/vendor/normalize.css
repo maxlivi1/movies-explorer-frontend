@@ -8,6 +8,23 @@
  * 2. Prevent adjustments of font size after orientation changes in iOS.
  */
 
+ html, body {
+  scrollbar-color: #1c1e20 rgb(60, 91, 145);
+  scrollbar-width: 7px;
+}
+
+::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+  background-color: #1c1e20;
+  z-index: -1;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: rgb(60, 91, 145);
+  border-radius: 9em;
+}
+
  html {
   line-height: 1.15; /* 1 */
   -webkit-text-size-adjust: 100%; /* 2 */
