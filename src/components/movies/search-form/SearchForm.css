@@ -118,3 +118,32 @@
   width: 36px;
   height: 20px;
 }
+
+@media (max-width: 1023px) {
+  .search-form {
+    padding: 70px 0 51px;
+  }
+}
+
+@media (max-width: 600px) {
+  .search-form {
+    padding: 70px 0 63px;
+    gap: 30px;
+  }
+  .search-form__input {
+    padding: 20px 95px 20px 12px;
+    height: 56px;
+    font-size: 16px;
+    line-height: 16px;
+  }
+  .search-form__submit {
+    width: 80px;
+    height: 44px;
+    top: 6px;
+    right: 6px;
+  }
+  .search-form__checkbox-label {
+    font-size: 11px;
+    gap: 13px;
+  }
+}

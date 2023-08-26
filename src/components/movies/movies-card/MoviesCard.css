@@ -97,3 +97,47 @@
 .movies-card__btn:hover {
   opacity: 0.7;
 }
+
+@media (max-width: 1023px) {
+  .movies-card {
+    height: 309px;
+  }
+  .movies-card__btn {
+    margin: 18px 0;
+  }
+}
+
+@media (max-width: 768px) {
+  .movies-card__name {
+    max-width: 224px;
+  }
+}
+
+@media (max-width: 600px) {
+  .movies-card__content {
+    padding: 14px;
+  }
+  .movies-card__name {
+    font-size: 12px;
+  }
+  .movies-card__time {
+    font-size: 10px;
+  }
+  .movies-card__btn {
+    margin: 14px 0;
+  }
+}
+@media (max-width: 320px) {
+  .movies-card {
+    height: 272px;
+  }
+  .movies-card__name {
+    max-width: 200px;
+  }
+  .movies-card__time {
+    max-width: 50px;
+  }
+  .movies-card__photo {
+    height: 168px;
+  }
+}
