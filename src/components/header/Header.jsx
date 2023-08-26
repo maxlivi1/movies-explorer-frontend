@@ -12,7 +12,8 @@ export default function Header({ loggedIn, openMobileMenu, isOpenMenu }) {
   const isVisible =
     pathname === ROUTES.main ||
     pathname === ROUTES.movies ||
-    pathname === ROUTES.savedMovies;
+    pathname === ROUTES.savedMovies ||
+    pathname === ROUTES.profile;
   const style =
     pathname === ROUTES.main ? "header" : "header header_place_main";
   return (

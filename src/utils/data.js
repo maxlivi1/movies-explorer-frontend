@@ -11,6 +11,11 @@ import f10 from "../images/test-images/pic-9.png";
 import f11 from "../images/test-images/pic-10.png";
 import f12 from "../images/test-images/pic-11.png";
 
+const user = {
+  name: "Максим",
+  email: "maxim@mail.ru"
+}
+
 const moviesSearchList = [
   {
     id: 1,
@@ -151,4 +156,4 @@ const moviesSavedList = [
 
 const moviesEmptyList = [];
 
-export { moviesEmptyList, moviesSearchList, moviesSavedList };
+export { moviesEmptyList, moviesSearchList, moviesSavedList, user };

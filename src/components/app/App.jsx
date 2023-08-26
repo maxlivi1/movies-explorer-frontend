@@ -12,7 +12,9 @@ import {
   moviesSearchList,
   // moviesEmptyList,
   moviesSavedList,
+  user,
 } from "../../utils/data";
+import Profile from "../profile/Profile";
 
 export default function App() {
   const getIdList = (list) => {
@@ -57,6 +59,7 @@ export default function App() {
           element={<Movies movies={moviesSaved} buttonType={"saved"} />}
         ></Route>
         <Route path={ROUTES.notFound} element={<NotFound />} />
+        <Route path={ROUTES.profile} element={<Profile user={user}/>} />
       </Routes>
       <Footer />
       <MobileMenu
