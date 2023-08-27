@@ -74,6 +74,12 @@
   transition: opacity 0.3s ease;
 }
 
+.search-form__submit_disable {
+  pointer-events: none;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
 .search-form__submit:hover {
   opacity: 0.8;
 }

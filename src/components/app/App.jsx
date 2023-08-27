@@ -17,6 +17,8 @@ import {
 import Profile from "../profile/Profile";
 import Login from "../login/Login";
 import Register from "../register/Register";
+import SavedMovies from "../saved-movies/SavedMovies";
+import FoundedMovies from "../founded-movies/FoundedMovies";
 
 export default function App() {
   const getIdList = (list) => {
@@ -31,6 +33,7 @@ export default function App() {
   const [savedCardsIdList, setSavedCardsIdList] = useState(
     getIdList(moviesSavedList)
   );
+  const [savedMovies, setSavedMovies] = useState(moviesSavedList)
   const moviesList = moviesEmptyList;
   const moviesSaved = moviesEmptyList;
 
@@ -53,12 +56,15 @@ export default function App() {
         <Route
           path={ROUTES.movies}
           element={
-            <Movies movies={moviesList} savedCardsIdList={savedCardsIdList} />
+            <FoundedMovies
+              movies={moviesList}
+              savedCardsIdList={savedCardsIdList}
+            />
           }
         ></Route>
         <Route
           path={ROUTES.savedMovies}
-          element={<Movies movies={moviesSaved} buttonType={"saved"} />}
+          element={<SavedMovies movies={savedMovies} />}
         ></Route>
         <Route path={ROUTES.notFound} element={<NotFound />} />
         <Route

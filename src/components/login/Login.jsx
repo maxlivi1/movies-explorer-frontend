@@ -8,7 +8,7 @@ export default function Login({ setLoggedIn }) {
   const login = (event) => {
     event.preventDefault();
     setLoggedIn(true);
-    navigate(ROUTES.main, { replace: true });
+    navigate(ROUTES.savedMovies, { replace: true });
   };
 
   return <MainForm onSubmit={login} />;

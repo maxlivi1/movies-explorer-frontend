@@ -37,11 +37,13 @@
 
 .movies__empty-container {
   margin: 0;
-  padding: 70px 0 60px;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex: 1;
   box-sizing: border-box;
-  justify-self: center;
   max-width: 550px;
-  height: 100%;
 
   font-size: 35px;
   font-style: normal;
