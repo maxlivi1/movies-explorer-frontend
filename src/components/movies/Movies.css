@@ -7,7 +7,7 @@
   justify-content: flex-start;
   align-items: center;
   background: #202020;
-  min-height: calc(100vh - 247px);
+  flex: 1;
 }
 
 .movies__btn-more {
@@ -36,12 +36,10 @@
 }
 
 .movies__empty-container {
-  margin: 100px 0;
+  margin: 0;
   padding: 70px 0 60px;
   box-sizing: border-box;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  justify-self: center;
   max-width: 550px;
   height: 100%;
 
@@ -62,5 +60,9 @@
 @media (max-width: 600px) {
   .movies {
     padding: 0 14px 80px;
+  }
+  .movies__empty-container {
+    font-size: 25px;
+    line-height: 30px;
   }
 }

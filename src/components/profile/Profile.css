@@ -72,6 +72,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  position: relative;
   border: none;
   outline: none;
   background-color: transparent;
@@ -82,6 +83,11 @@
   line-height: normal;
   color: #fff;
   text-align: right;
+}
+
+.profile__input:focus {
+  background-color: rgb(56, 58, 59);
+
 }
 
 .profile__btn-container {

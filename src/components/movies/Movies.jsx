@@ -28,7 +28,7 @@ export default function Movies({ movies, buttonType, savedCardsIdList }) {
         <div className="movies__empty-container">
           {pathname === ROUTES.movies
             ? "Введите название фильма чтобы начать поиск"
-            : "У вас пока нет сохраненных фильмов"}
+            : "У вас пока нет сохранённых фильмов"}
         </div>
       )}
     </section>

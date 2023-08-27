@@ -1,6 +1,9 @@
 import "./Promo.css";
 
 export default function Promo() {
+  const scrollToTop = () => {
+    document.getElementById("about-project").scrollIntoView({ behavior: "smooth" });
+  };
   return (
     <section className="promo">
       <div className="promo__content">
@@ -11,7 +14,9 @@ export default function Promo() {
         <p className="promo__description">
           Листайте ниже, чтобы узнать больше про этот проект и его создателя.
         </p>
-        <button className="promo__btn-more">Узнать больше</button>
+        <button className="promo__btn-more" onClick={scrollToTop}>
+          Узнать больше
+        </button>
       </div>
       <div className="promo__image"></div>
     </section>

@@ -10,11 +10,13 @@ import MobileMenu from "../mobileMenu/MobileMenu";
 import Movies from "../movies/Movies";
 import {
   moviesSearchList,
-  // moviesEmptyList,
+  moviesEmptyList,
   moviesSavedList,
   user,
 } from "../../utils/data";
 import Profile from "../profile/Profile";
+import Login from "../login/Login";
+import Register from "../register/Register";
 
 export default function App() {
   const getIdList = (list) => {
@@ -24,13 +26,13 @@ export default function App() {
     });
     return idList;
   };
-  const [loggedIn, setLoggedIn] = useState(true);
+  const [loggedIn, setLoggedIn] = useState(false);
   const [isOpenMenu, setIsOpenMenu] = useState(false);
   const [savedCardsIdList, setSavedCardsIdList] = useState(
     getIdList(moviesSavedList)
   );
-  const moviesList = moviesSearchList;
-  const moviesSaved = moviesSavedList;
+  const moviesList = moviesEmptyList;
+  const moviesSaved = moviesEmptyList;
 
   const openMobileMenu = () => {
     setIsOpenMenu(true);
@@ -59,7 +61,15 @@ export default function App() {
           element={<Movies movies={moviesSaved} buttonType={"saved"} />}
         ></Route>
         <Route path={ROUTES.notFound} element={<NotFound />} />
-        <Route path={ROUTES.profile} element={<Profile user={user}/>} />
+        <Route
+          path={ROUTES.profile}
+          element={<Profile user={user} setLoggedIn={setLoggedIn} />}
+        />
+        <Route path={ROUTES.registration} element={<Register />} />
+        <Route
+          path={ROUTES.login}
+          element={<Login setLoggedIn={setLoggedIn} />}
+        />
       </Routes>
       <Footer />
       <MobileMenu
