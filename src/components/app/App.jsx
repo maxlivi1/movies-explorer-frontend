@@ -7,13 +7,7 @@ import Main from "../main/Main";
 import NotFound from "../404/NotFound";
 import "./App.css";
 import MobileMenu from "../mobileMenu/MobileMenu";
-import Movies from "../movies/Movies";
-import {
-  moviesSearchList,
-  moviesEmptyList,
-  moviesSavedList,
-  user,
-} from "../../utils/data";
+import { moviesSavedList, user } from "../../utils/data";
 import Profile from "../profile/Profile";
 import Login from "../login/Login";
 import Register from "../register/Register";
@@ -33,9 +27,8 @@ export default function App() {
   const [savedCardsIdList, setSavedCardsIdList] = useState(
     getIdList(moviesSavedList)
   );
-  const [savedMovies, setSavedMovies] = useState(moviesSavedList)
-  const moviesList = moviesEmptyList;
-  const moviesSaved = moviesEmptyList;
+  const [searchMoviesList, setSearchMoviesList] = useState([]);
+  const [savedMovies, setSavedMovies] = useState(moviesSavedList);
 
   const openMobileMenu = () => {
     setIsOpenMenu(true);
@@ -57,8 +50,9 @@ export default function App() {
           path={ROUTES.movies}
           element={
             <FoundedMovies
-              movies={moviesList}
+              movies={searchMoviesList}
               savedCardsIdList={savedCardsIdList}
+              setSearchMoviesList={setSearchMoviesList}
             />
           }
         ></Route>

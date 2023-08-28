@@ -3,7 +3,7 @@ import "./BurgerMenu.css";
 export default function BurgerMenu({ loggedIn, onClick }) {
   return (
     loggedIn && (
-      <button type="button" className="header__burger-menu" onClick={onClick}>
+      <button type="button" className="burger-menu" onClick={onClick}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="44"

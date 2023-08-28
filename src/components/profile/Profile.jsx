@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ROUTES } from "../../utils/constants";
+import { useForm } from "../../hooks/useForm";
 import "./Profile.css";
 
 export default function Profile({ user, setLoggedIn }) {
@@ -10,14 +11,19 @@ export default function Profile({ user, setLoggedIn }) {
 
   const navigate = useNavigate();
 
+  const { values, handleChangeValues } = useForm({
+    name: name,
+    email: email,
+  });
+
   const edit = () => {
     setIsEditable(true);
   };
 
   const save = () => {
     setIsEditable(false);
-    setName(user.name);
-    setEmail(user.email);
+    setName(values.name);
+    setEmail(values.email);
   };
 
   const logout = () => {
@@ -37,13 +43,14 @@ export default function Profile({ user, setLoggedIn }) {
               type="text"
               autoComplete="auto"
               name="name"
-              value={name}
-              onChange={(event) => {
-                setName(event.target.value);
-              }}
+              value={values.name}
+              minLength={2}
+              maxLength={30}
+              required
+              onChange={handleChangeValues}
             />
           ) : (
-            <span className="profile__value">{user.name}</span>
+            <span className="profile__value">{name}</span>
           )}
         </div>
         <div className="profile__info">
@@ -53,13 +60,11 @@ export default function Profile({ user, setLoggedIn }) {
               className="profile__input"
               type="email"
               name="email"
-              value={email}
-              onChange={(event) => {
-                setEmail(event.target.value);
-              }}
+              value={values.email}
+              onChange={handleChangeValues}
             />
           ) : (
-            <span className="profile__value">{user.email}</span>
+            <span className="profile__value">{email}</span>
           )}
         </div>
         <div className="profile__btn-container">

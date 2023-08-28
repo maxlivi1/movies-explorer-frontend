@@ -1,4 +1,5 @@
 import { Link, useLocation } from "react-router-dom";
+import { useForm } from "../../hooks/useForm";
 import { ROUTES } from "../../utils/constants";
 import Logo from "../header/logo/Logo";
 import "./MainForm.css";
@@ -9,6 +10,12 @@ export default function MainForm({ onSubmit }) {
   const btnStyle = isRegister
     ? "main-form__register-button"
     : "main-form__register-button main-form__register-button_place_login";
+
+  const { values, handleChangeValues } = useForm({
+    name: "",
+    email: "",
+    password: "",
+  });
 
   return (
     <section className="main-form">
@@ -21,7 +28,17 @@ export default function MainForm({ onSubmit }) {
           {isRegister && (
             <label className="main-form__form-label">
               {"Имя"}
-              <input type="text" className="main-form__form-input" />
+              <input
+                id="input-name"
+                type="text"
+                className="main-form__form-input"
+                name="name"
+                value={values.name}
+                onChange={handleChangeValues}
+                minLength={2}
+                maxLength={30}
+                required
+              />
             </label>
           )}
           <label className="main-form__form-label">
@@ -30,6 +47,9 @@ export default function MainForm({ onSubmit }) {
               type="email"
               className="main-form__form-input"
               autoComplete="new-email"
+              name="email"
+              value={values.email}
+              onChange={handleChangeValues}
             />
           </label>
           <label className="main-form__form-label">
@@ -38,6 +58,10 @@ export default function MainForm({ onSubmit }) {
               type="password"
               className="main-form__form-input"
               autoComplete="new-password"
+              name="password"
+              value={values.password}
+              onChange={handleChangeValues}
+              required
             />
           </label>
         </fieldset>

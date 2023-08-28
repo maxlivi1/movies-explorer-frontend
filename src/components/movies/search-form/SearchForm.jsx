@@ -2,6 +2,8 @@ import { useState } from "react";
 import "./SearchForm.css";
 
 export default function SearchForm({ onSearch }) {
+  const [search, setSearch] = useState("");
+  const [isValidInput, setIsValidInput] = useState(false);
   const [isDisable, setIsDisable] = useState(false);
   const [isShortsFilmFilter, setIsShortsFilmFilter] = useState(false);
 
@@ -11,15 +13,38 @@ export default function SearchForm({ onSearch }) {
 
   const searchFilm = async (event) => {
     event.preventDefault();
+    if(!isValidInput) return;
     setIsDisable(true);
     await onSearch();
-    setIsDisable(false);
+    setTimeout(() => {
+      setIsDisable(false);
+    }, 1500);
+  };
+
+  const handleChangeInput = (event) => {
+    const v = event.target.value;
+    setSearch(v);
+    if (v.trim().length > 1) {
+      setIsValidInput(true);
+      setIsDisable(false);
+    } else {
+      setIsValidInput(false);
+      setIsDisable(true);
+    }
+    console.log(v.length);
+    console.log(isValidInput);
   };
 
   return (
     <form className="search-form" onSubmit={searchFilm}>
       <div className="search-form__container">
-        <input type="text" className="search-form__input" placeholder="Фильм" />
+        <input
+          type="text"
+          className="search-form__input"
+          placeholder="Фильм"
+          value={search}
+          onChange={handleChangeInput}
+        />
         <button type="submit" className={btnStyle}>
           Поиск
         </button>

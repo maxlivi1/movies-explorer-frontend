@@ -1,10 +1,12 @@
 import { useState } from "react";
 import Movies from "../movies/Movies";
+import { moviesSearchList } from "../../utils/data";
 
 export default function FoundedMovies({
   movies,
   buttonType,
   savedCardsIdList,
+  setSearchMoviesList,
 }) {
   const [isLoading, setIsLoading] = useState(false);
 
@@ -12,6 +14,7 @@ export default function FoundedMovies({
     setIsLoading(true);
     setTimeout(() => {
       setIsLoading(false);
+      setSearchMoviesList(moviesSearchList);
     }, 1500);
   };
   return (

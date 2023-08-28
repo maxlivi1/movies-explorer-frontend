@@ -1,4 +1,4 @@
-.techs__card {
+.techs-card {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -18,7 +18,7 @@
 }
 
 @media (max-width: 1023px) {
-  .techs__card {
+  .techs-card {
     width: 84px;
     height: 57px;
     font-size: 12px;
