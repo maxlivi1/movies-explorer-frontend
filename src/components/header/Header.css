@@ -1,0 +1,28 @@
+.header {
+  margin: 0;
+  padding: 0 70px;
+  box-sizing: border-box;
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 74px;
+  background-color: rgba(7, 48, 66, 1);
+}
+
+.header_place_main {
+  background-color: rgba(32, 32, 32, 1);
+}
+
+@media (max-width: 1023px) {
+  .header {
+    padding: 0 30px;
+  }
+}
+
+@media (max-width: 600px) {
+  .header {
+    padding: 0 14px;
+  }
+}
