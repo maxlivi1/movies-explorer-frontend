@@ -82,7 +82,7 @@
   border-radius: 30px;
   background-color: rgba(49, 49, 49, 1);
   width: 100px;
-  height: 29px;
+  min-height: 29px;
   cursor: pointer;
 
   font-size: 12px;

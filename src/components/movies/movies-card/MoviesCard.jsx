@@ -1,7 +1,10 @@
 import { useState } from "react";
+import { useLocation, Link } from "react-router-dom";
+import { ROUTES } from "../../../utils/constants";
 import "./MoviesCard.css";
 
 export default function MoviesCard({ movie, buttonType }) {
+  const pathname = useLocation().pathname;
   const [btnType, setBtnType] = useState(buttonType);
   let filmTime = "";
   const time = Number(movie.duration);
@@ -10,6 +13,11 @@ export default function MoviesCard({ movie, buttonType }) {
   } else {
     filmTime = `${Math.floor(time / 60)}ч ${time % 60}мин`;
   }
+
+  const imageUrl =
+    pathname === ROUTES.savedMovies
+      ? movie.image.url
+      : `https://api.nomoreparties.co${movie.image.url}`;
 
   const changeBtnType = () => {
     if (btnType === "searchSaved") return setBtnType("");
@@ -24,11 +32,13 @@ export default function MoviesCard({ movie, buttonType }) {
         </p>
         <span className="movies-card__time">{filmTime}</span>
       </div>
-      <img
-        className="movies-card__photo"
-        src={movie.image.url}
-        alt={`Картинка к фильму ${movie.nameRU}`}
-      />
+      <Link to={movie.trailerLink} target={"_blank"}>
+        <img
+          className="movies-card__photo"
+          src={imageUrl}
+          alt={`Картинка к фильму ${movie.nameRU}`}
+        />
+      </Link>
       <button
         type="button"
         className="movies-card__btn"

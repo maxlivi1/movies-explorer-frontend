@@ -1,7 +1,8 @@
 import { useState } from "react";
+import getFilteredMovies from "../../../utils/getFilteredMovies";
 import "./SearchForm.css";
 
-export default function SearchForm({ onSearch }) {
+export default function SearchForm({ movies, onSearch }) {
   const [search, setSearch] = useState("");
   const [isValidInput, setIsValidInput] = useState(false);
   const [isDisable, setIsDisable] = useState(false);
@@ -11,28 +12,27 @@ export default function SearchForm({ onSearch }) {
     ? "search-form__submit search-form__submit_disable"
     : "search-form__submit";
 
-  const searchFilm = async (event) => {
+  const searchFilm = (event) => {
     event.preventDefault();
-    if(!isValidInput) return;
-    setIsDisable(true);
-    await onSearch();
-    setTimeout(() => {
+    if (!isValidInput) {
+      setIsDisable(true);
+      return;
+    } else {
       setIsDisable(false);
-    }, 1500);
+      onSearch(getFilteredMovies(movies, search, isShortsFilmFilter));
+    }
   };
 
   const handleChangeInput = (event) => {
-    const v = event.target.value;
-    setSearch(v);
-    if (v.trim().length > 1) {
+    const inputValue = event.target.value;
+    setSearch(inputValue);
+    if (inputValue.trim().length > 0) {
       setIsValidInput(true);
       setIsDisable(false);
     } else {
       setIsValidInput(false);
       setIsDisable(true);
     }
-    console.log(v.length);
-    console.log(isValidInput);
   };
 
   return (

@@ -13,6 +13,7 @@ export default function SavedMovies({ movies, savedCardsIdList }) {
   return (
     <Movies
       movies={movies}
+      filteredMovies={movies}
       buttonType={"saved"}
       savedCardsIdList={savedCardsIdList}
       isLoading={isLoading}

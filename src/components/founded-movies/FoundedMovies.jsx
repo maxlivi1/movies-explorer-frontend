@@ -1,29 +1,32 @@
 import { useState } from "react";
 import Movies from "../movies/Movies";
-import { moviesSearchList } from "../../utils/data";
+import { searchMovies } from "../../utils/MoviesApi";
 
-export default function FoundedMovies({
-  movies,
-  buttonType,
-  savedCardsIdList,
-  setSearchMoviesList,
-}) {
+export default function FoundedMovies({ buttonType, savedCardsIdList }) {
+  const [movies, setMovies] = useState([]);
+  const [searchedMovies, setSearchedMovies] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
-  const searchFilm = async () => {
+  const searchFilms = (filteredList) => {
     setIsLoading(true);
-    setTimeout(() => {
-      setIsLoading(false);
-      setSearchMoviesList(moviesSearchList);
-    }, 1500);
+    searchMovies()
+      .then((moviesData) => {
+        setMovies(moviesData);
+        setSearchedMovies(filteredList);
+      })
+      .catch((err) => console.log(err)) // вывести ошибку для клиента
+      .finally(() => {
+        setIsLoading(false);
+      });
   };
   return (
     <Movies
       movies={movies}
+      filteredMovies={searchedMovies}
       buttonType={buttonType}
       savedCardsIdList={savedCardsIdList}
       isLoading={isLoading}
-      onSearch={searchFilm}
+      onSearch={searchFilms}
     />
   );
 }

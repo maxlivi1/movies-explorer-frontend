@@ -7,26 +7,27 @@ import SearchForm from "./search-form/SearchForm";
 
 export default function Movies({
   movies,
+  filteredMovies,
   buttonType,
   savedCardsIdList,
   isLoading,
-  onSearch
+  onSearch,
 }) {
-  const isEmptyList = !Boolean(movies.length);
+  const isEmptyList = !Boolean(filteredMovies.length);
   const pathname = useLocation().pathname;
 
   return (
     <section className="movies">
-      <SearchForm onSearch={onSearch} />
+      <SearchForm movies={movies} onSearch={onSearch} />
       {isLoading && <Preloader />}
       {!isLoading && !isEmptyList && (
         <>
           <MoviesCardList
-            movies={movies}
+            movies={filteredMovies}
             savedCardsIdList={savedCardsIdList}
             buttonType={buttonType}
           />
-          {pathname === ROUTES.movies && (
+          {pathname === ROUTES.movies && filteredMovies.length !== 0 && (
             <button type="button" className="movies__btn-more">
               Ещё
             </button>

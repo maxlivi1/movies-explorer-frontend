@@ -27,7 +27,6 @@ export default function App() {
   const [savedCardsIdList, setSavedCardsIdList] = useState(
     getIdList(moviesSavedList)
   );
-  const [searchMoviesList, setSearchMoviesList] = useState([]);
   const [savedMovies, setSavedMovies] = useState(moviesSavedList);
 
   const openMobileMenu = () => {
@@ -48,13 +47,7 @@ export default function App() {
         <Route path={ROUTES.main} element={<Main />} />
         <Route
           path={ROUTES.movies}
-          element={
-            <FoundedMovies
-              movies={searchMoviesList}
-              savedCardsIdList={savedCardsIdList}
-              setSearchMoviesList={setSearchMoviesList}
-            />
-          }
+          element={<FoundedMovies savedCardsIdList={savedCardsIdList} />}
         ></Route>
         <Route
           path={ROUTES.savedMovies}
