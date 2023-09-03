@@ -1,24 +1,26 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { ROUTES } from "../../utils/constants";
+import { MESSAGE_TYPE, ROUTES } from "../../utils/constants";
 import { useForm } from "../../hooks/useForm";
 import "./Profile.css";
+import { useAppContext } from "../../contexts/AppContext";
+import { signout } from "../../utils/MainApi";
 
 export default function Profile({ user, setLoggedIn }) {
   const [isEditable, setIsEditable] = useState(false);
   const [name, setName] = useState(user.name);
   const [email, setEmail] = useState(user.email);
+  const { showMessage } = useAppContext();
 
   const navigate = useNavigate();
+
+  const profileInfoStyle = "";
+  const profileNameStyle = "";
 
   const { values, handleChangeValues } = useForm({
     name: name,
     email: email,
   });
-
-  const edit = () => {
-    setIsEditable(true);
-  };
 
   const save = () => {
     setIsEditable(false);
@@ -27,8 +29,23 @@ export default function Profile({ user, setLoggedIn }) {
   };
 
   const logout = () => {
-    setLoggedIn(false);
-    navigate(ROUTES.main, { replace: true });
+    signout()
+      .then((response) => {
+        showMessage({
+          message: response.message,
+          messageType: MESSAGE_TYPE.message,
+        });
+        setLoggedIn(false);
+        navigate(ROUTES.main, { replace: true });
+      })
+      .catch((info) => info)
+      .then((infoMessage) => {
+        showMessage({
+          message: infoMessage.message,
+          messageType: MESSAGE_TYPE.error,
+        });
+      })
+      .catch((error) => console.log(error));
   };
 
   return (
@@ -78,7 +95,11 @@ export default function Profile({ user, setLoggedIn }) {
             </button>
           ) : (
             <>
-              <button className="profile__btn" type="button" onClick={edit}>
+              <button
+                className="profile__btn"
+                type="button"
+                onClick={() => setIsEditable(true)}
+              >
                 Редактировать
               </button>
               <button

@@ -25,15 +25,15 @@ const TECHNOLOGIES = [
 const PROJECTS_LIST = [
   {
     name: "Статичный сайт",
-    url: "https://maxlivi1.github.io/how-to-learn/"
+    url: "https://maxlivi1.github.io/how-to-learn/",
   },
   {
     name: "Адаптивный сайт",
-    url: "https://maxlivi1.github.io/russian-travel/"
+    url: "https://maxlivi1.github.io/russian-travel/",
   },
   {
     name: "Одностраничное приложение",
-    url: "https://maxlivi.students.nomoredomains.xyz"
+    url: "https://maxlivi.students.nomoredomains.xyz",
   },
 ];
 
@@ -43,7 +43,15 @@ const ROUTES = {
   savedMovies: "/saved-movies",
   registration: "/signup",
   login: "/signin",
+  signout: "/signout",
   profile: "/profile",
   notFound: "*",
-}
-export { TECHNOLOGIES, PROJECTS_LIST, ROUTES };
+};
+
+const MESSAGE_TYPE = {
+  message: "message",
+  error: "error",
+  success: "success",
+};
+
+export { TECHNOLOGIES, PROJECTS_LIST, ROUTES, MESSAGE_TYPE };

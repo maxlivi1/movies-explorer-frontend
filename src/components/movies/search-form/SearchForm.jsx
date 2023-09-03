@@ -6,7 +6,7 @@ export default function SearchForm({ movies, onSearch }) {
   const [search, setSearch] = useState("");
   const [isValidInput, setIsValidInput] = useState(false);
   const [isDisable, setIsDisable] = useState(false);
-  const [isShortsFilmFilter, setIsShortsFilmFilter] = useState(false);
+  const [isShorts, setIsShorts] = useState(false);
 
   const btnStyle = isDisable
     ? "search-form__submit search-form__submit_disable"
@@ -19,7 +19,7 @@ export default function SearchForm({ movies, onSearch }) {
       return;
     } else {
       setIsDisable(false);
-      onSearch(getFilteredMovies(movies, search, isShortsFilmFilter));
+      onSearch(getFilteredMovies(movies, search, isShorts));
     }
   };
 
@@ -54,11 +54,11 @@ export default function SearchForm({ movies, onSearch }) {
           className="search-form__checkbox"
           type="checkbox"
           onChange={(event) => {
-            setIsShortsFilmFilter(event.target.checked);
+            setIsShorts(event.target.checked);
           }}
         />
         <span className="search-form__checkbox-span">
-          {isShortsFilmFilter ? (
+          {isShorts ? (
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="36"

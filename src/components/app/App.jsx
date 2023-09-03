@@ -13,6 +13,7 @@ import Login from "../login/Login";
 import Register from "../register/Register";
 import SavedMovies from "../saved-movies/SavedMovies";
 import FoundedMovies from "../founded-movies/FoundedMovies";
+import InfoMessage from "../info-message/InfoMessage";
 
 export default function App() {
   const getIdList = (list) => {
@@ -58,7 +59,10 @@ export default function App() {
           path={ROUTES.profile}
           element={<Profile user={user} setLoggedIn={setLoggedIn} />}
         />
-        <Route path={ROUTES.registration} element={<Register />} />
+        <Route
+          path={ROUTES.registration}
+          element={<Register setLoggedIn={setLoggedIn} />}
+        />
         <Route
           path={ROUTES.login}
           element={<Login setLoggedIn={setLoggedIn} />}
@@ -70,6 +74,7 @@ export default function App() {
         isOpenMobileMenu={isOpenMenu}
         onClose={closeMobileMenu}
       />
+      <InfoMessage />
     </div>
   );
 }
