@@ -73,6 +73,7 @@ export default function MainForm({ onSubmit }) {
                 minLength={2}
                 maxLength={30}
                 required
+                autoComplete="none"
               />
             </label>
           )}
@@ -81,7 +82,7 @@ export default function MainForm({ onSubmit }) {
             <input
               type="email"
               className="main-form__form-input"
-              autoComplete="new-email"
+              autoComplete="none"
               name="email"
               value={values.email}
               onChange={handleChangeInput}
@@ -93,7 +94,7 @@ export default function MainForm({ onSubmit }) {
             <input
               type="password"
               className="main-form__form-input"
-              autoComplete="new-password"
+              autoComplete="none"
               name="password"
               value={values.password}
               onChange={handleChangeInput}

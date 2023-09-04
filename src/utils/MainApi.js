@@ -37,4 +37,15 @@ const signout = () => {
   }).then((response) => checkResponse(response));
 };
 
-export { register, login, signout };
+const updateUserInfo = ({ name, email }) => {
+  return fetch(`${baseUrl}${ROUTES.profile}`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    credentials: "include",
+    body: JSON.stringify({ name, email }),
+  }).then((response) => checkResponse(response));
+};
+
+export { register, login, signout, updateUserInfo };

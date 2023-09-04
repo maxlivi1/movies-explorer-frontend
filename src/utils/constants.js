@@ -44,7 +44,7 @@ const ROUTES = {
   registration: "/signup",
   login: "/signin",
   signout: "/signout",
-  profile: "/profile",
+  profile: "/users/me",
   notFound: "*",
 };
 

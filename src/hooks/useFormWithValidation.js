@@ -23,7 +23,7 @@ const useFormWithValidation = () => {
   //   [setValues, setErrors, setIsValid]
   // );
 
-  return { values, handleChange, isValid};
+  return { values, handleChange, isValid, setValues };
 };
 
 export { useFormWithValidation };
