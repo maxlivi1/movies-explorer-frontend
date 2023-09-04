@@ -8,7 +8,6 @@ import "./MainForm.css";
 
 export default function MainForm({ onSubmit }) {
   const [error, setError] = useState("");
-  const [isDisable, setIsDisable] = useState(false);
   const isRegister = useLocation().pathname === ROUTES.registration;
 
   const { values, handleChange, isValid } = useFormWithValidation();
@@ -18,15 +17,14 @@ export default function MainForm({ onSubmit }) {
     if (!isRegister) {
       btnStyle = `${btnStyle} main-form__register-button_place_login`;
     }
-    if (isDisable || !isValid) {
+    if (!isValid) {
       btnStyle = `${btnStyle} main-form__register-button_disabled`;
     }
     return btnStyle;
-  }, [isDisable, isRegister, isValid]);
+  }, [isRegister, isValid]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    setIsDisable(true);
     if (isRegister) {
       await onSubmit({
         name: values.name,
@@ -39,7 +37,6 @@ export default function MainForm({ onSubmit }) {
         password: values.password,
       });
     }
-    setIsDisable(false);
   };
 
   const handleChangeInput = (event) => {

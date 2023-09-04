@@ -37,6 +37,12 @@ const signout = () => {
   }).then((response) => checkResponse(response));
 };
 
+const getUserInfo = () => {
+  return fetch(`${baseUrl}${ROUTES.profile}`, {
+    credentials: "include",
+  }).then((response) => checkResponse(response));
+};
+
 const updateUserInfo = ({ name, email }) => {
   return fetch(`${baseUrl}${ROUTES.profile}`, {
     method: "PATCH",
@@ -48,4 +54,4 @@ const updateUserInfo = ({ name, email }) => {
   }).then((response) => checkResponse(response));
 };
 
-export { register, login, signout, updateUserInfo };
+export { register, login, signout, getUserInfo, updateUserInfo };
