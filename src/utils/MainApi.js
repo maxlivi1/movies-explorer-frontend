@@ -54,4 +54,64 @@ const updateUserInfo = ({ name, email }) => {
   }).then((response) => checkResponse(response));
 };
 
-export { register, login, signout, getUserInfo, updateUserInfo };
+const getSavedMovies = () => {
+  return fetch(`${baseUrl}${ROUTES.movies}`, {
+    credentials: "include",
+  }).then((response) => checkResponse(response));
+};
+
+const deleteMovie = (movieId) => {
+  return fetch(`${baseUrl}${ROUTES.movies}/${movieId}`, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    credentials: "include",
+  }).then((response) => checkResponse(response));
+};
+
+const saveMovie = ({
+  country,
+  director,
+  duration,
+  year,
+  description,
+  image,
+  trailerLink,
+  thumbnail,
+  movieId,
+  nameRU,
+  nameEN,
+}) => {
+  return fetch(`${baseUrl}${ROUTES.movies}`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    credentials: "include",
+    body: JSON.stringify({
+      country,
+      director,
+      duration,
+      year,
+      description,
+      image,
+      trailerLink,
+      thumbnail,
+      movieId,
+      nameRU,
+      nameEN,
+    }),
+  }).then((response) => checkResponse(response));
+};
+
+export {
+  register,
+  login,
+  signout,
+  getUserInfo,
+  updateUserInfo,
+  getSavedMovies,
+  saveMovie,
+  deleteMovie,
+};

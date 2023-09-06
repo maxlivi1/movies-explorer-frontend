@@ -1,4 +1,4 @@
-const searchMovies = () => {
+const getBeatfilmMovies = () => {
   return fetch("https://api.nomoreparties.co/beatfilm-movies").then(
     (response) => {
       if (response.ok) {
@@ -9,4 +9,4 @@ const searchMovies = () => {
   );
 };
 
-export { searchMovies };
+export { getBeatfilmMovies };

@@ -1,12 +1,11 @@
 import { useState } from "react";
-import getFilteredMovies from "../../../utils/getFilteredMovies";
 import "./SearchForm.css";
 
-export default function SearchForm({ movies, onSearch }) {
+export default function SearchForm({ onSearch, onSearchByTime }) {
   const [search, setSearch] = useState("");
+  const [isShorts, setIsShorts] = useState(false);
   const [isValidInput, setIsValidInput] = useState(false);
   const [isDisable, setIsDisable] = useState(false);
-  const [isShorts, setIsShorts] = useState(false);
 
   const btnStyle = isDisable
     ? "search-form__submit search-form__submit_disable"
@@ -19,8 +18,13 @@ export default function SearchForm({ movies, onSearch }) {
       return;
     } else {
       setIsDisable(false);
-      onSearch(getFilteredMovies(movies, search, isShorts));
+      onSearch({ search: search, isShorts: isShorts });
     }
+  };
+
+  const searchFilmByTime = (event) => {
+    setIsShorts(event.target.checked);
+    onSearchByTime({ search: search, isShorts: event.target.checked });
   };
 
   const handleChangeInput = (event) => {
@@ -53,9 +57,7 @@ export default function SearchForm({ movies, onSearch }) {
         <input
           className="search-form__checkbox"
           type="checkbox"
-          onChange={(event) => {
-            setIsShorts(event.target.checked);
-          }}
+          onChange={searchFilmByTime}
         />
         <span className="search-form__checkbox-span">
           {isShorts ? (

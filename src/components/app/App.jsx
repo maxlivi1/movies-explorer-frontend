@@ -1,13 +1,12 @@
 import { useState } from "react";
 import { Route, Routes, useNavigate } from "react-router-dom";
-import { ROUTES } from "../../utils/constants";
+import { MESSAGE_TYPE, ROUTES } from "../../utils/constants";
 import Footer from "../footer/Footer";
 import Header from "../header/Header";
 import Main from "../main/Main";
 import NotFound from "../404/NotFound";
 import "./App.css";
 import MobileMenu from "../mobile-menu/MobileMenu";
-import { moviesSavedList, user } from "../../utils/data";
 import Profile from "../profile/Profile";
 import Login from "../login/Login";
 import Register from "../register/Register";
@@ -16,24 +15,23 @@ import FoundedMovies from "../founded-movies/FoundedMovies";
 import InfoMessage from "../info-message/InfoMessage";
 import { useAppContext } from "../../contexts/AppContext";
 import { useEffect } from "react";
-import { getUserInfo } from "../../utils/MainApi";
+import { getSavedMovies, getUserInfo } from "../../utils/MainApi";
 import ProtectedRoute from "../protected-route/ProtectedRoute";
+import useSavedMovies from "../../hooks/useSavedMovies";
 
 export default function App() {
-  const { loggedIn, setLoggedIn, updateCurrentUser, showMessage } =
+  const { loggedIn, setLoggedIn, currentUser, updateCurrentUser, showMessage } =
     useAppContext();
-  const getIdList = (list) => {
-    const idList = [];
-    list.forEach((movie) => {
-      idList.push(movie.cardId);
-    });
-    return idList;
-  };
+  const {
+    savedMovies,
+    getSavedMovie,
+    saveNewMovie,
+    deleteMovie,
+    saveAllMovies,
+    isSaved,
+  } = useSavedMovies();
   const [isOpenMenu, setIsOpenMenu] = useState(false);
-  const [savedCardsIdList, setSavedCardsIdList] = useState(
-    getIdList(moviesSavedList)
-  );
-  const [savedMovies, setSavedMovies] = useState(moviesSavedList);
+
   const navigate = useNavigate();
 
   const openMobileMenu = () => {
@@ -41,6 +39,14 @@ export default function App() {
   };
   const closeMobileMenu = () => {
     setIsOpenMenu(false);
+  };
+
+  const saveFilm = (movie) => {
+    saveNewMovie(movie);
+  };
+
+  const deleteFilm = (movie) => {
+    deleteMovie(movie);
   };
 
   useEffect(() => {
@@ -52,6 +58,22 @@ export default function App() {
       })
       .catch((info) => info)
       .then((infoMessage) => console.log(infoMessage.message))
+      .catch((error) => console.log(error));
+  }, [loggedIn]);
+
+  useEffect(() => {
+    if (!loggedIn) return;
+    getSavedMovies()
+      .then((moviesData) => {
+        saveAllMovies(moviesData);
+      })
+      .catch((info) => info)
+      .then((infoMessage) => {
+        showMessage({
+          message: infoMessage.message,
+          messageType: MESSAGE_TYPE.error,
+        });
+      })
       .catch((error) => console.log(error));
   }, [loggedIn]);
 
@@ -70,7 +92,10 @@ export default function App() {
             <ProtectedRoute
               element={FoundedMovies}
               loggedIn={loggedIn}
-              savedCardsIdList={savedCardsIdList}
+              onSave={saveFilm}
+              onDelete={deleteFilm}
+              isSaved={isSaved}
+              getMovie={getSavedMovie}
             />
           }
         ></Route>
@@ -81,13 +106,14 @@ export default function App() {
               element={SavedMovies}
               loggedIn={loggedIn}
               movies={savedMovies}
+              onDelete={deleteFilm}
             />
           }
         ></Route>
         <Route path={ROUTES.notFound} element={<NotFound />} />
         <Route
           path={ROUTES.profile}
-          element={<Profile user={user} setLoggedIn={setLoggedIn} />}
+          element={<Profile user={currentUser} setLoggedIn={setLoggedIn} />}
         />
         <Route
           path={ROUTES.registration}

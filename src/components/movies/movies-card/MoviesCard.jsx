@@ -3,9 +3,10 @@ import { useLocation, Link } from "react-router-dom";
 import { ROUTES } from "../../../utils/constants";
 import "./MoviesCard.css";
 
-export default function MoviesCard({ movie, buttonType }) {
+export default function MoviesCard({ movie, buttonType, onClick }) {
   const pathname = useLocation().pathname;
   const [btnType, setBtnType] = useState(buttonType);
+
   let filmTime = "";
   const time = Number(movie.duration);
   if (time < 60) {
@@ -16,10 +17,11 @@ export default function MoviesCard({ movie, buttonType }) {
 
   const imageUrl =
     pathname === ROUTES.savedMovies
-      ? movie.image.url
+      ? movie.image
       : `https://api.nomoreparties.co${movie.image.url}`;
 
   const changeBtnType = () => {
+    onClick(movie);
     if (btnType === "searchSaved") return setBtnType("");
     if (!btnType) return setBtnType("searchSaved");
   };
