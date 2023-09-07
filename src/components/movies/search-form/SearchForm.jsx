@@ -1,9 +1,15 @@
+import { useEffect } from "react";
 import { useState } from "react";
 import "./SearchForm.css";
 
-export default function SearchForm({ onSearch, onSearchByTime }) {
-  const [search, setSearch] = useState("");
-  const [isShorts, setIsShorts] = useState(false);
+export default function SearchForm({
+  onSearch,
+  onSearchByTime,
+  searchPhrase = "",
+  isShortsMovies = false,
+}) {
+  const [search, setSearch] = useState(searchPhrase);
+  const [isShorts, setIsShorts] = useState(isShortsMovies);
   const [isValidInput, setIsValidInput] = useState(false);
   const [isDisable, setIsDisable] = useState(false);
 
@@ -57,6 +63,7 @@ export default function SearchForm({ onSearch, onSearchByTime }) {
         <input
           className="search-form__checkbox"
           type="checkbox"
+          checked={isShorts}
           onChange={searchFilmByTime}
         />
         <span className="search-form__checkbox-span">

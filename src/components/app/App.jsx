@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import { MESSAGE_TYPE, ROUTES } from "../../utils/constants";
 import Footer from "../footer/Footer";
@@ -14,7 +14,7 @@ import SavedMovies from "../saved-movies/SavedMovies";
 import FoundedMovies from "../founded-movies/FoundedMovies";
 import InfoMessage from "../info-message/InfoMessage";
 import { useAppContext } from "../../contexts/AppContext";
-import { useEffect } from "react";
+
 import { getSavedMovies, getUserInfo } from "../../utils/MainApi";
 import ProtectedRoute from "../protected-route/ProtectedRoute";
 import useSavedMovies from "../../hooks/useSavedMovies";

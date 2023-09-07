@@ -10,6 +10,26 @@ const useMoviesSearch = () => {
   const [isShorts, setIsShorts] = useState(false);
   const isSavedMovies = useLocation().pathname === ROUTES.savedMovies;
 
+  const getStorageValues = () => {
+    const storage = window.localStorage;
+    let searchData = {
+      shorts: false,
+      search: "",
+      movies: [],
+    };
+    if (storage.getItem("search") === null) return searchData;
+    try {
+      const storageSearch = JSON.parse(storage.getItem("search"));
+      console.log(storageSearch);
+      if (storageSearch.movies.length !== 0) {
+        searchData = storageSearch;
+      }
+    } catch (e) {
+      storage.removeItem("search");
+    }
+    return searchData;
+  };
+
   useEffect(() => {
     if (!searchString.trim() && !isSavedMovies) {
       setSearchedMovies([]);
@@ -18,11 +38,22 @@ const useMoviesSearch = () => {
     setSearchedMovies(getFilteredMovies(moviesList, searchString, isShorts));
   }, [searchString, isShorts, moviesList]);
 
+  useEffect(() => {
+    if (!isSavedMovies) {
+      setIsShorts(getStorageValues().shorts);
+      setMoviesList(getStorageValues().movies);
+      setSearchString(getStorageValues().search);
+    }
+  }, []);
+
   return {
     setMoviesList,
     setSearchString,
     setIsShorts,
     searchedMovies,
+    setSearchedMovies,
+    isShorts,
+    searchString,
   };
 };
 

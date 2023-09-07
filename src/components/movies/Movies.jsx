@@ -12,13 +12,20 @@ export default function Movies({
   onSearchByTime,
   onClick,
   isSaved,
+  searchPhrase,
+  isShortsMovies,
 }) {
   const isEmptyList = !Boolean(movies.length);
   const pathname = useLocation().pathname;
 
   return (
     <section className="movies">
-      <SearchForm onSearch={onSearch} onSearchByTime={onSearchByTime} />
+      <SearchForm
+        onSearch={onSearch}
+        onSearchByTime={onSearchByTime}
+        searchPhrase={searchPhrase}
+        isShortsMovies={isShortsMovies}
+      />
       {isLoading && <Preloader />}
       {!isLoading && !isEmptyList && (
         <>

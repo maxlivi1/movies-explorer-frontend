@@ -5,12 +5,49 @@ import useMoviesSearch from "../../hooks/useMoviesSearch";
 import { deleteMovie, saveMovie } from "../../utils/MainApi";
 import { useAppContext } from "../../contexts/AppContext";
 import { MESSAGE_TYPE } from "../../utils/constants";
+import { useEffect } from "react";
 
 export default function FoundedMovies({ onSave, onDelete, isSaved, getMovie }) {
   const [isLoading, setIsLoading] = useState(false);
-  const { searchedMovies, setMoviesList, setSearchString, setIsShorts } =
-    useMoviesSearch();
+  const {
+    searchedMovies,
+    setMoviesList,
+    setSearchString,
+    searchString,
+    setIsShorts,
+    isShorts,
+  } = useMoviesSearch();
   const { showMessage } = useAppContext();
+
+  const getStorageValues = () => {
+    const storage = window.localStorage;
+    let searchData = {
+      shorts: false,
+      search: "",
+      movies: [],
+    };
+    if (storage.getItem("search") === null) return searchData;
+    try {
+      const storageSearch = JSON.parse(storage.getItem("search"));
+      console.log(storageSearch);
+      if (storageSearch.movies.length !== 0) {
+        searchData = storageSearch;
+      }
+    } catch (e) {
+      storage.removeItem("search");
+    }
+    return searchData;
+  };
+
+  const setStorage = ({ shorts, search, movies }) => {
+    const storage = window.localStorage;
+    const storageData = {
+      shorts: shorts,
+      search: search,
+      movies: movies,
+    };
+    storage.setItem("search", JSON.stringify(storageData));
+  };
 
   const searchFilms = ({ search, isShorts }) => {
     setIsLoading(true);
@@ -88,6 +125,14 @@ export default function FoundedMovies({ onSave, onDelete, isSaved, getMovie }) {
     }
   };
 
+  useEffect(() => {
+    setStorage({
+      shorts: isShorts,
+      search: searchString,
+      movies: searchedMovies,
+    });
+  }, [searchString, isShorts, searchedMovies]);
+
   return (
     <Movies
       movies={searchedMovies}
@@ -96,6 +141,8 @@ export default function FoundedMovies({ onSave, onDelete, isSaved, getMovie }) {
       onSearchByTime={searchShortFilms}
       onClick={onClick}
       isSaved={isSaved}
+      searchPhrase={getStorageValues().search}
+      isShortsMovies={getStorageValues().shorts}
     />
   );
 }
