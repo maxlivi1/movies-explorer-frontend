@@ -8,21 +8,19 @@ export default function SearchForm({
 }) {
   const [search, setSearch] = useState(searchPhrase);
   const [isShorts, setIsShorts] = useState(isShortsMovies);
-  const [isValidInput, setIsValidInput] = useState(false);
-  const [isDisable, setIsDisable] = useState(false);
+  const [isVisibleError, setIsVisibleError] = useState(false);
 
-  const btnStyle = isDisable
-    ? "search-form__submit search-form__submit_disable"
-    : "search-form__submit";
+  const errorStyle = isVisibleError
+    ? "search-form__error search-form__error_visible"
+    : "search-form__error";
 
   const searchFilm = (event) => {
     event.preventDefault();
-    if (!isValidInput) {
-      setIsDisable(true);
-      return;
-    } else {
-      setIsDisable(false);
+    if (search.trim().length > 0) {
       onSearch({ search: search, shorts: isShorts });
+      setIsVisibleError(false);
+    } else {
+      setIsVisibleError(true);
     }
   };
 
@@ -34,18 +32,12 @@ export default function SearchForm({
   const handleChangeInput = (event) => {
     const inputValue = event.target.value;
     setSearch(inputValue);
-    if (inputValue.trim().length > 0) {
-      setIsValidInput(true);
-      setIsDisable(false);
-    } else {
-      setIsValidInput(false);
-      setIsDisable(true);
-    }
   };
 
   return (
     <form className="search-form" onSubmit={searchFilm}>
       <div className="search-form__container">
+        <span className={errorStyle}>Необходимо ввести запрос</span>
         <input
           type="text"
           className="search-form__input"
@@ -53,7 +45,7 @@ export default function SearchForm({
           value={search}
           onChange={handleChangeInput}
         />
-        <button type="submit" className={btnStyle}>
+        <button type="submit" className="search-form__submit">
           Поиск
         </button>
       </div>
