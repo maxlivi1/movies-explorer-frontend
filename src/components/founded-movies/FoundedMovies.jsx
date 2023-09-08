@@ -8,9 +8,12 @@ import { useEffect } from "react";
 import useLocalStorage from "../../hooks/useLocalStorage";
 import getFilteredMovies from "../../utils/getFilteredMovies";
 import { useAppData } from "../../hooks/useAppData";
+import useResize from "../../hooks/useResize";
 
 export default function FoundedMovies({ onSave, onDelete, isSaved, getMovie }) {
   const [isLoading, setIsLoading] = useState(false);
+  const [filteredList, setFilteredList] = useState([]);
+  const [isButtonMoreVisible, setIsButtonMoreVisible] = useState(false);
   const { getStorageValues, setStorageValues } = useLocalStorage();
   const {
     setMoviesList,
@@ -21,6 +24,7 @@ export default function FoundedMovies({ onSave, onDelete, isSaved, getMovie }) {
   } = useMoviesSearch();
   const { showMessage, beatFilmMovies } = useAppContext();
   const { getBeatfilmMoviesData } = useAppData();
+  const { count, elseCount } = useResize();
 
   const searchFilms = ({ search, shorts }) => {
     if (beatFilmMovies.length === 0) {
@@ -102,17 +106,39 @@ export default function FoundedMovies({ onSave, onDelete, isSaved, getMovie }) {
     }
   };
 
+  const showMoreMovies = () => {
+    setFilteredList(searchedMovies.slice(0, filteredList.length + elseCount));
+  };
+
   useEffect(() => {
     setSearchedMovies(getStorageValues().movies);
+    setFilteredList(getStorageValues().movies.slice(0, count));
   }, []);
+
+  useEffect(() => {
+    setFilteredList(searchedMovies.slice(0, count));
+  }, [count, searchedMovies]);
+
+  useEffect(() => {
+    if (
+      searchedMovies.length === filteredList.length ||
+      searchedMovies.length <= count
+    ) {
+      setIsButtonMoreVisible(false);
+    } else {
+      setIsButtonMoreVisible(true);
+    }
+  }, [filteredList, searchedMovies, count]);
 
   return (
     <Movies
-      movies={searchedMovies}
+      movies={filteredList}
       isLoading={isLoading}
       onSearch={searchFilms}
       onClick={onClick}
       isSaved={isSaved}
+      isMoreVisible={isButtonMoreVisible}
+      showMore={showMoreMovies}
       searchPhrase={getStorageValues().search}
       isShortsMovies={getStorageValues().shorts}
     />

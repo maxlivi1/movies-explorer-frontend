@@ -50,7 +50,6 @@ export default function App() {
     getUserInfoData();
     if (!loggedIn) return;
     getSavedMoviesData(saveAllMovies);
-    // getBeatfilmMoviesData();
   }, [loggedIn]);
 
   return (

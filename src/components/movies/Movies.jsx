@@ -13,8 +13,13 @@ export default function Movies({
   isSaved,
   searchPhrase,
   isShortsMovies,
+  isMoreVisible,
+  showMore,
 }) {
   const isEmptyList = !Boolean(movies.length);
+  const moreStyle = `movies__btn-more ${
+    isMoreVisible ? "" : "movies__btn-more_hide"
+  }`;
   const pathname = useLocation().pathname;
 
   return (
@@ -28,8 +33,8 @@ export default function Movies({
       {!isLoading && !isEmptyList && (
         <>
           <MoviesCardList movies={movies} isSaved={isSaved} onClick={onClick} />
-          {pathname === ROUTES.movies && isEmptyList && (
-            <button type="button" className="movies__btn-more">
+          {pathname === ROUTES.movies && !isEmptyList && (
+            <button type="button" className={moreStyle} onClick={showMore}>
               Ещё
             </button>
           )}
