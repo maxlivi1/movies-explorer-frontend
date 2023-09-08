@@ -80,6 +80,7 @@ export default function Profile({ setLoggedIn }) {
           messageType: MESSAGE_TYPE.message,
         });
         setLoggedIn(false);
+        window.localStorage.removeItem("search");
         navigate(ROUTES.main, { replace: true });
       })
       .catch((info) => info)

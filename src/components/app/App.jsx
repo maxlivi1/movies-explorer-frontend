@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import { Route, Routes, useNavigate } from "react-router-dom";
-import { MESSAGE_TYPE, ROUTES } from "../../utils/constants";
+import { Route, Routes } from "react-router-dom";
+import { ROUTES } from "../../utils/constants";
 import Footer from "../footer/Footer";
 import Header from "../header/Header";
 import Main from "../main/Main";
@@ -14,14 +14,12 @@ import SavedMovies from "../saved-movies/SavedMovies";
 import FoundedMovies from "../founded-movies/FoundedMovies";
 import InfoMessage from "../info-message/InfoMessage";
 import { useAppContext } from "../../contexts/AppContext";
-
-import { getSavedMovies, getUserInfo } from "../../utils/MainApi";
 import ProtectedRoute from "../protected-route/ProtectedRoute";
 import useSavedMovies from "../../hooks/useSavedMovies";
+import { useAppData } from "../../hooks/useAppData";
 
 export default function App() {
-  const { loggedIn, setLoggedIn, currentUser, updateCurrentUser, showMessage } =
-    useAppContext();
+  const { loggedIn, setLoggedIn, currentUser } = useAppContext();
   const {
     savedMovies,
     getSavedMovie,
@@ -30,9 +28,8 @@ export default function App() {
     saveAllMovies,
     isSaved,
   } = useSavedMovies();
+  const { getUserInfoData, getSavedMoviesData } = useAppData();
   const [isOpenMenu, setIsOpenMenu] = useState(false);
-
-  const navigate = useNavigate();
 
   const openMobileMenu = () => {
     setIsOpenMenu(true);
@@ -50,31 +47,10 @@ export default function App() {
   };
 
   useEffect(() => {
-    getUserInfo()
-      .then((userData) => {
-        setLoggedIn(true);
-        updateCurrentUser(userData);
-        navigate(ROUTES.movies, { replace: true });
-      })
-      .catch((info) => info)
-      .then((infoMessage) => console.log(infoMessage.message))
-      .catch((error) => console.log(error));
-  }, [loggedIn]);
-
-  useEffect(() => {
+    getUserInfoData();
     if (!loggedIn) return;
-    getSavedMovies()
-      .then((moviesData) => {
-        saveAllMovies(moviesData);
-      })
-      .catch((info) => info)
-      .then((infoMessage) => {
-        showMessage({
-          message: infoMessage.message,
-          messageType: MESSAGE_TYPE.error,
-        });
-      })
-      .catch((error) => console.log(error));
+    getSavedMoviesData(saveAllMovies);
+    // getBeatfilmMoviesData();
   }, [loggedIn]);
 
   return (

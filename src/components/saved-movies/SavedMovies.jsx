@@ -6,8 +6,13 @@ import { useAppContext } from "../../contexts/AppContext";
 import { MESSAGE_TYPE } from "../../utils/constants";
 
 export default function SavedMovies({ movies, onDelete }) {
-  const { searchedMovies, setMoviesList, setSearchString, setIsShorts } =
-    useMoviesSearch();
+  const {
+    searchedMovies,
+    setMoviesList,
+    searchString,
+    setSearchString,
+    setIsShorts,
+  } = useMoviesSearch();
   const { showMessage } = useAppContext();
 
   const searchFilms = ({ search, isShorts }) => {
@@ -42,8 +47,8 @@ export default function SavedMovies({ movies, onDelete }) {
     <Movies
       movies={searchedMovies}
       onSearch={searchFilms}
-      onSearchByTime={searchFilms}
       onClick={onClick}
+      searchPhrase={searchString}
     />
   );
 }

@@ -13,7 +13,7 @@ const useSavedMovies = () => {
   };
 
   const saveNewMovie = (movie) => {
-    setSavedMovies((prev) => [...prev, movie]);
+    setSavedMovies((prev) => [movie, ...prev]);
   };
 
   const deleteMovie = (movie) => {

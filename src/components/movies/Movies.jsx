@@ -9,7 +9,6 @@ export default function Movies({
   movies,
   isLoading,
   onSearch,
-  onSearchByTime,
   onClick,
   isSaved,
   searchPhrase,
@@ -22,7 +21,6 @@ export default function Movies({
     <section className="movies">
       <SearchForm
         onSearch={onSearch}
-        onSearchByTime={onSearchByTime}
         searchPhrase={searchPhrase}
         isShortsMovies={isShortsMovies}
       />
@@ -40,7 +38,9 @@ export default function Movies({
 
       {!isLoading && isEmptyList && (
         <div className="movies__empty-container">
-          {pathname === ROUTES.movies
+          {Boolean(searchPhrase.trim())
+            ? "Фильмы по вашему запросу не найдены"
+            : pathname === ROUTES.movies
             ? "Введите название фильма чтобы начать поиск"
             : "У вас пока нет сохранённых фильмов"}
         </div>

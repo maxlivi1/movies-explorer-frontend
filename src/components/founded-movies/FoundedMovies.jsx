@@ -1,70 +1,47 @@
 import { useState } from "react";
 import Movies from "../movies/Movies";
-import { getBeatfilmMovies } from "../../utils/MoviesApi";
 import useMoviesSearch from "../../hooks/useMoviesSearch";
 import { deleteMovie, saveMovie } from "../../utils/MainApi";
 import { useAppContext } from "../../contexts/AppContext";
 import { MESSAGE_TYPE } from "../../utils/constants";
 import { useEffect } from "react";
+import useLocalStorage from "../../hooks/useLocalStorage";
+import getFilteredMovies from "../../utils/getFilteredMovies";
+import { useAppData } from "../../hooks/useAppData";
 
 export default function FoundedMovies({ onSave, onDelete, isSaved, getMovie }) {
   const [isLoading, setIsLoading] = useState(false);
+  const { getStorageValues, setStorageValues } = useLocalStorage();
   const {
-    searchedMovies,
     setMoviesList,
+    searchedMovies,
+    setSearchedMovies,
     setSearchString,
-    searchString,
     setIsShorts,
-    isShorts,
   } = useMoviesSearch();
-  const { showMessage } = useAppContext();
+  const { showMessage, beatFilmMovies } = useAppContext();
+  const { getBeatfilmMoviesData } = useAppData();
 
-  const getStorageValues = () => {
-    const storage = window.localStorage;
-    let searchData = {
-      shorts: false,
-      search: "",
-      movies: [],
-    };
-    if (storage.getItem("search") === null) return searchData;
-    try {
-      const storageSearch = JSON.parse(storage.getItem("search"));
-      console.log(storageSearch);
-      if (storageSearch.movies.length !== 0) {
-        searchData = storageSearch;
-      }
-    } catch (e) {
-      storage.removeItem("search");
+  const searchFilms = ({ search, shorts }) => {
+    if (beatFilmMovies.length === 0) {
+      getBeatfilmMoviesData(setIsLoading, setMoviesList);
     }
-    return searchData;
-  };
-
-  const setStorage = ({ shorts, search, movies }) => {
-    const storage = window.localStorage;
-    const storageData = {
-      shorts: shorts,
-      search: search,
-      movies: movies,
-    };
-    storage.setItem("search", JSON.stringify(storageData));
-  };
-
-  const searchFilms = ({ search, isShorts }) => {
-    setIsLoading(true);
-    getBeatfilmMovies()
-      .then((moviesData) => {
-        setMoviesList(moviesData);
-        setIsShorts(isShorts);
-        setSearchString(search);
-      })
-      .catch((err) => console.log(err))
-      .finally(() => {
-        setIsLoading(false);
-      });
-  };
-  const searchShortFilms = ({ search, isShorts }) => {
-    setIsShorts(isShorts);
+    setMoviesList(beatFilmMovies);
+    setIsShorts(shorts);
     setSearchString(search);
+    if (!search.trim()) {
+      setStorageValues({
+        shorts: shorts,
+        search: search,
+        movies: getFilteredMovies([], search, shorts),
+      });
+    } else {
+      setStorageValues({
+        shorts: shorts,
+        search: search,
+        movies: getFilteredMovies(beatFilmMovies, search, shorts),
+      });
+    }
   };
 
   const saveFilm = (movie) => {
@@ -126,19 +103,14 @@ export default function FoundedMovies({ onSave, onDelete, isSaved, getMovie }) {
   };
 
   useEffect(() => {
-    setStorage({
-      shorts: isShorts,
-      search: searchString,
-      movies: searchedMovies,
-    });
-  }, [searchString, isShorts, searchedMovies]);
+    setSearchedMovies(getStorageValues().movies);
+  }, []);
 
   return (
     <Movies
       movies={searchedMovies}
       isLoading={isLoading}
       onSearch={searchFilms}
-      onSearchByTime={searchShortFilms}
       onClick={onClick}
       isSaved={isSaved}
       searchPhrase={getStorageValues().search}

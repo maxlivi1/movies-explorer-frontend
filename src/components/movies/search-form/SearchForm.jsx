@@ -1,10 +1,8 @@
-import { useEffect } from "react";
 import { useState } from "react";
 import "./SearchForm.css";
 
 export default function SearchForm({
   onSearch,
-  onSearchByTime,
   searchPhrase = "",
   isShortsMovies = false,
 }) {
@@ -24,13 +22,13 @@ export default function SearchForm({
       return;
     } else {
       setIsDisable(false);
-      onSearch({ search: search, isShorts: isShorts });
+      onSearch({ search: search, shorts: isShorts });
     }
   };
 
-  const searchFilmByTime = (event) => {
+  const handleChangeCheckbox = (event) => {
     setIsShorts(event.target.checked);
-    onSearchByTime({ search: search, isShorts: event.target.checked });
+    onSearch({ search: search, shorts: event.target.checked });
   };
 
   const handleChangeInput = (event) => {
@@ -64,7 +62,7 @@ export default function SearchForm({
           className="search-form__checkbox"
           type="checkbox"
           checked={isShorts}
-          onChange={searchFilmByTime}
+          onChange={handleChangeCheckbox}
         />
         <span className="search-form__checkbox-span">
           {isShorts ? (

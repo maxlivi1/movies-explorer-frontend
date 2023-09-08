@@ -1,7 +1,5 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useState } from "react";
 import { useInfoMessage } from "../hooks/useInfoMessage";
-import { MESSAGE_TYPE } from "../utils/constants";
-import { getUserInfo } from "../utils/MainApi";
 
 const AppContext = createContext();
 
@@ -12,6 +10,7 @@ export const useAppContext = () => {
 export const AppProvider = ({ children }) => {
   const [loggedIn, setLoggedIn] = useState(false);
   const [user, setUser] = useState({ name: "", email: "" });
+  const [beatFilmMovies, setBeatFilmMovies] = useState([]);
   const { isOpen, open, close, text, type } = useInfoMessage();
 
   return (
@@ -21,6 +20,8 @@ export const AppProvider = ({ children }) => {
         setLoggedIn: setLoggedIn,
         currentUser: user,
         updateCurrentUser: setUser,
+        beatFilmMovies,
+        setBeatFilmMovies,
         isOpenMessage: isOpen,
         showMessage: open,
         hideMessage: close,
