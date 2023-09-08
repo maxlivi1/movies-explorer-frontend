@@ -6,7 +6,6 @@ import { useAppContext } from "../../contexts/AppContext";
 import { MESSAGE_TYPE } from "../../utils/constants";
 import { useEffect } from "react";
 import useLocalStorage from "../../hooks/useLocalStorage";
-import getFilteredMovies from "../../utils/getFilteredMovies";
 import { useAppData } from "../../hooks/useAppData";
 import useResize from "../../hooks/useResize";
 
@@ -16,6 +15,8 @@ export default function FoundedMovies({ onSave, onDelete, isSaved, getMovie }) {
   const [isButtonMoreVisible, setIsButtonMoreVisible] = useState(false);
   const { getStorageValues, setStorageValues } = useLocalStorage();
   const {
+    isShorts,
+    searchString,
     setMoviesList,
     searchedMovies,
     setSearchedMovies,
@@ -33,19 +34,6 @@ export default function FoundedMovies({ onSave, onDelete, isSaved, getMovie }) {
     setMoviesList(beatFilmMovies);
     setIsShorts(shorts);
     setSearchString(search);
-    if (!search.trim()) {
-      setStorageValues({
-        shorts: shorts,
-        search: search,
-        movies: getFilteredMovies([], search, shorts),
-      });
-    } else {
-      setStorageValues({
-        shorts: shorts,
-        search: search,
-        movies: getFilteredMovies(beatFilmMovies, search, shorts),
-      });
-    }
   };
 
   const saveFilm = (movie) => {
@@ -111,8 +99,9 @@ export default function FoundedMovies({ onSave, onDelete, isSaved, getMovie }) {
   };
 
   useEffect(() => {
-    setSearchedMovies(getStorageValues().movies);
-    setFilteredList(getStorageValues().movies.slice(0, count));
+    const { movies } = getStorageValues();
+    setSearchedMovies(movies);
+    setFilteredList(movies.slice(0, count));
   }, []);
 
   useEffect(() => {
@@ -129,6 +118,16 @@ export default function FoundedMovies({ onSave, onDelete, isSaved, getMovie }) {
       setIsButtonMoreVisible(true);
     }
   }, [filteredList, searchedMovies, count]);
+
+  useEffect(() => {
+    if (!searchString.trim()) return;
+
+    setStorageValues({
+      shorts: isShorts,
+      search: searchString,
+      movies: searchedMovies,
+    });
+  }, [searchedMovies, searchString, isShorts]);
 
   return (
     <Movies

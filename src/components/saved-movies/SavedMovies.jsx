@@ -15,8 +15,8 @@ export default function SavedMovies({ movies, onDelete }) {
   } = useMoviesSearch();
   const { showMessage } = useAppContext();
 
-  const searchFilms = ({ search, isShorts }) => {
-    setIsShorts(isShorts);
+  const searchFilms = ({ search, shorts }) => {
+    setIsShorts(shorts);
     setSearchString(search);
   };
 
