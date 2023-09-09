@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { MESSAGE_TYPE, ROUTES } from "../../utils/constants";
+import { MESSAGE_TYPE, REG_EXP, ROUTES } from "../../utils/constants";
 import "./Profile.css";
 import { useAppContext } from "../../contexts/AppContext";
 import { signout, updateUserInfo } from "../../utils/MainApi";
@@ -17,7 +17,8 @@ export default function Profile({ setLoggedIn }) {
   const { showMessage } = useAppContext();
 
   const navigate = useNavigate();
-  const { values, handleChange, isValid, setValues } = useFormWithValidation();
+  const { values, getError, handleChange, isValid, setValues } =
+    useFormWithValidation();
 
   const submitStyle = isDisabled
     ? "profile__save-button profile__save-button_disabled"
@@ -41,8 +42,9 @@ export default function Profile({ setLoggedIn }) {
   };
 
   const handleChangeInput = (event) => {
+    const target = event.target;
     handleChange(event);
-    setError(event.target.validationMessage);
+    setError(getError(target));
   };
 
   const save = () => {
@@ -124,8 +126,7 @@ export default function Profile({ setLoggedIn }) {
                 autoComplete="none"
                 name="name"
                 value={name}
-                minLength={2}
-                maxLength={30}
+                pattern={REG_EXP.name}
                 required
                 onChange={handleChangeInput}
               />
@@ -138,11 +139,12 @@ export default function Profile({ setLoggedIn }) {
             {isEditable ? (
               <input
                 className="profile__input"
-                type="email"
+                type="text"
                 name="email"
                 value={email}
-                onChange={handleChangeInput}
+                pattern={REG_EXP.email}
                 required
+                onChange={handleChangeInput}
                 autoComplete="none"
               />
             ) : (

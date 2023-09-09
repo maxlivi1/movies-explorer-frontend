@@ -54,4 +54,11 @@ const MESSAGE_TYPE = {
   success: "success",
 };
 
-export { TECHNOLOGIES, PROJECTS_LIST, ROUTES, MESSAGE_TYPE };
+const REG_EXP = {
+  name: "^[a-zA-ZА-Яа-яЁё \\-]{2,30}$",
+  email: "^\\w+([\\-+.']\\w+)*@\\w+([\\-.]\\w+)*.\\w+([\\-.]\\w+)*$",
+  password:
+    "^(?=.*[A-Z].*[A-Z])(?=.*[!@#$&*])(?=.*[0-9].*[0-9])(?=.*[a-z].*[a-z].*[a-z]).{6,}$",
+};
+
+export { TECHNOLOGIES, PROJECTS_LIST, ROUTES, MESSAGE_TYPE, REG_EXP };
