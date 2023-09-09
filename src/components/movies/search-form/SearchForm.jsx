@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useState } from "react";
 import "./SearchForm.css";
 
@@ -33,6 +34,12 @@ export default function SearchForm({
     const inputValue = event.target.value;
     setSearch(inputValue);
   };
+
+  useEffect(() => {
+    if (isVisibleError && search.trim().length > 0) {
+      setIsVisibleError(false);
+    }
+  }, [search]);
 
   return (
     <form className="search-form" onSubmit={searchFilm}>

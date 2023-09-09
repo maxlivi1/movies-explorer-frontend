@@ -53,6 +53,7 @@ const useSavedMovies = () => {
 
   return {
     savedMovies,
+    savedIdList,
     saveNewMovie,
     deleteMovie,
     saveAllMovies,

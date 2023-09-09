@@ -5,24 +5,23 @@ import "./Profile.css";
 import { useAppContext } from "../../contexts/AppContext";
 import { signout, updateUserInfo } from "../../utils/MainApi";
 import { useFormWithValidation } from "../../hooks/useFormWithValidation";
-import { useMemo } from "react";
+import { useEffect } from "react";
 
 export default function Profile({ setLoggedIn }) {
   const { currentUser, updateCurrentUser } = useAppContext();
+  const [name, setName] = useState(currentUser.name);
+  const [email, setEmail] = useState(currentUser.email);
   const [isEditable, setIsEditable] = useState(false);
+  const [isDisabled, setIsDisabled] = useState(true);
   const [error, setError] = useState("");
   const { showMessage } = useAppContext();
 
   const navigate = useNavigate();
   const { values, handleChange, isValid, setValues } = useFormWithValidation();
 
-  const getButtonStyle = useMemo(() => {
-    let btnStyle = "profile__save-button";
-    if (!isValid) {
-      btnStyle = `${btnStyle} profile__save-button_disabled`;
-    }
-    return btnStyle;
-  }, [isValid]);
+  const submitStyle = isDisabled
+    ? "profile__save-button profile__save-button_disabled"
+    : "profile__save-button";
 
   const profileInfoStyle = isEditable
     ? "profile__info profile__info_editable"
@@ -31,25 +30,25 @@ export default function Profile({ setLoggedIn }) {
     ? "profile__name profile__name_editable"
     : "profile__name";
 
-  const handleChangeInput = (event) => {
-    handleChange(event);
-    setError(event.target.validationMessage);
-  };
-
   const isWithoutChanges = () => {
     if (
-      currentUser.name !== values.name.trim() ||
-      currentUser.email !== values.email.trim()
+      currentUser.name !== name.trim() ||
+      currentUser.email !== email.trim()
     ) {
       return false;
     }
     return true;
   };
 
+  const handleChangeInput = (event) => {
+    handleChange(event);
+    setError(event.target.validationMessage);
+  };
+
   const save = () => {
     setIsEditable(false);
     if (isWithoutChanges()) return;
-    updateUserInfo({ name: values.name.trim(), email: values.email.trim() })
+    updateUserInfo({ name: name.trim(), email: email.trim() })
       .then((userData) => {
         updateCurrentUser({ name: userData.name, email: userData.email });
         showMessage({
@@ -70,6 +69,11 @@ export default function Profile({ setLoggedIn }) {
   const edit = () => {
     setIsEditable(true);
     setValues({ ...values, name: currentUser.name, email: currentUser.email });
+    setIsDisabled(true);
+  };
+
+  const cancel = () => {
+    setIsEditable(false);
   };
 
   const logout = () => {
@@ -93,6 +97,19 @@ export default function Profile({ setLoggedIn }) {
       .catch((error) => console.log(error));
   };
 
+  useEffect(() => {
+    setName(values.name);
+    setEmail(values.email);
+  }, [values]);
+
+  useEffect(() => {
+    if (isValid && !isWithoutChanges()) {
+      setIsDisabled(false);
+    } else {
+      setIsDisabled(true);
+    }
+  }, [name, email, isValid]);
+
   return (
     <section className="profile">
       <div className="profile__container">
@@ -106,7 +123,7 @@ export default function Profile({ setLoggedIn }) {
                 type="text"
                 autoComplete="none"
                 name="name"
-                value={values.name}
+                value={name}
                 minLength={2}
                 maxLength={30}
                 required
@@ -123,7 +140,7 @@ export default function Profile({ setLoggedIn }) {
                 className="profile__input"
                 type="email"
                 name="email"
-                value={values.email}
+                value={email}
                 onChange={handleChangeInput}
                 required
                 autoComplete="none"
@@ -136,9 +153,18 @@ export default function Profile({ setLoggedIn }) {
 
         <div className="profile__btn-container">
           {isEditable ? (
-            <button className={getButtonStyle} type="button" onClick={save}>
-              Сохранить
-            </button>
+            <>
+              <button className={submitStyle} type="button" onClick={save}>
+                Сохранить
+              </button>
+              <button
+                className="profile__save-button profile__save-button_type_cancel"
+                type="button"
+                onClick={cancel}
+              >
+                Отменить
+              </button>
+            </>
           ) : (
             <>
               <button className="profile__btn" type="button" onClick={edit}>

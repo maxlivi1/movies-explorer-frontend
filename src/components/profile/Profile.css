@@ -193,10 +193,15 @@
   color: #fff;
 }
 
+.profile__save-button_type_cancel {
+  color: #000;
+  background: rgb(167, 159, 159);
+}
+
 .profile__save-button_disabled {
   pointer-events: none;
   cursor: not-allowed;
-  opacity: 0.6;
+  background: #5c687a;
 }
 
 .profile__btn:hover {
