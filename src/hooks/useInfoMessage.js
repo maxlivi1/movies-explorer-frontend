@@ -13,9 +13,6 @@ const useInfoMessage = () => {
     setIsOpen(true);
     setTimeout(() => {
       close();
-      setTimeout(() => {
-        setText("");
-      }, 5000);
     }, 5000);
   };
 

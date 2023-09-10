@@ -48,7 +48,6 @@ export default function Profile() {
   };
 
   const save = () => {
-    setIsEditable(false);
     if (isWithoutChanges()) return;
     updateUserInfo({ name: name.trim(), email: email.trim() })
       .then((userData) => {
@@ -57,6 +56,7 @@ export default function Profile() {
           message: "Данные пользователя успешно обновлены",
           messageType: MESSAGE_TYPE.message,
         });
+        setIsEditable(false);
       })
       .catch((info) => info)
       .then((infoMessage) => {
