@@ -8,8 +8,14 @@ import { useEffect } from "react";
 import useLocalStorage from "../../hooks/useLocalStorage";
 import { useAppData } from "../../hooks/useAppData";
 import useResize from "../../hooks/useResize";
+import useSavedMovies from "../../hooks/useSavedMovies";
 
-export default function FoundedMovies({ onSave, onDelete, isSaved, getMovie }) {
+export default function FoundedMovies({
+  onSave,
+  onDelete,
+  savedIdList,
+  getMovie,
+}) {
   const [isLoading, setIsLoading] = useState(false);
   const [filteredList, setFilteredList] = useState([]);
   const [isButtonMoreVisible, setIsButtonMoreVisible] = useState(false);
@@ -23,6 +29,7 @@ export default function FoundedMovies({ onSave, onDelete, isSaved, getMovie }) {
     setSearchString,
     setIsShorts,
   } = useMoviesSearch();
+  const { isSaved } = useSavedMovies();
   const { showMessage, beatFilmMovies } = useAppContext();
   const { getBeatfilmMoviesData } = useAppData();
   const { count, elseCount } = useResize();
@@ -86,8 +93,8 @@ export default function FoundedMovies({ onSave, onDelete, isSaved, getMovie }) {
       .catch((error) => console.log(error));
   };
 
-  const onClick = (movie) => {
-    if (isSaved(movie.id)) {
+  const onClick = (movie, idList) => {
+    if (isSaved(movie.id, idList)) {
       deleteFilm(getMovie(movie.id));
     } else {
       saveFilm(movie);
@@ -135,7 +142,7 @@ export default function FoundedMovies({ onSave, onDelete, isSaved, getMovie }) {
       isLoading={isLoading}
       onSearch={searchFilms}
       onClick={onClick}
-      isSaved={isSaved}
+      savedIdList={savedIdList}
       isMoreVisible={isButtonMoreVisible}
       showMore={showMoreMovies}
       searchPhrase={getStorageValues().search}

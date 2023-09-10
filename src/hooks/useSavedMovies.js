@@ -25,9 +25,9 @@ const useSavedMovies = () => {
     setSavedMovies(movies);
   };
 
-  const isSaved = (id) => {
+  const isSaved = (id, idList) => {
     let b = false;
-    savedIdList.forEach((i) => {
+    idList.forEach((i) => {
       if (i === id) {
         b = true;
         return;

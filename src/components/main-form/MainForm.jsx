@@ -76,7 +76,7 @@ export default function MainForm({ onSubmit }) {
                 type="text"
                 className="main-form__form-input"
                 name="name"
-                value={name}
+                value={values.name}
                 onChange={handleChangeInput}
                 pattern={REG_EXP.name}
                 required
@@ -91,7 +91,7 @@ export default function MainForm({ onSubmit }) {
               className="main-form__form-input"
               autoComplete="none"
               name="email"
-              value={email}
+              value={values.email}
               onChange={handleChangeInput}
               pattern={REG_EXP.email}
               required
@@ -104,7 +104,7 @@ export default function MainForm({ onSubmit }) {
               className="main-form__form-input"
               autoComplete="none"
               name="password"
-              value={password}
+              value={values.password}
               onChange={handleChangeInput}
               pattern={REG_EXP.password}
               required

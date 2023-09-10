@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Route, Routes, useNavigate } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import { ROUTES } from "../../utils/constants";
 import Footer from "../footer/Footer";
 import Header from "../header/Header";
@@ -19,18 +19,17 @@ import useSavedMovies from "../../hooks/useSavedMovies";
 import { useAppData } from "../../hooks/useAppData";
 
 export default function App() {
-  const { loggedIn, setLoggedIn, currentUser } = useAppContext();
+  const { loggedIn } = useAppContext();
   const {
     savedMovies,
     getSavedMovie,
     saveNewMovie,
     deleteMovie,
     saveAllMovies,
-    isSaved,
+    savedIdList,
   } = useSavedMovies();
   const { getUserInfoData, getSavedMoviesData } = useAppData();
   const [isOpenMenu, setIsOpenMenu] = useState(false);
-  const navigate = useNavigate();
 
   const openMobileMenu = () => {
     setIsOpenMenu(true);
@@ -69,7 +68,7 @@ export default function App() {
               element={FoundedMovies}
               onSave={saveFilm}
               onDelete={deleteFilm}
-              isSaved={isSaved}
+              savedIdList={savedIdList}
               getMovie={getSavedMovie}
             />
           }

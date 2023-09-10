@@ -10,7 +10,7 @@ export default function Movies({
   isLoading,
   onSearch,
   onClick,
-  isSaved,
+  savedIdList,
   searchPhrase,
   isShortsMovies,
   isMoreVisible,
@@ -32,7 +32,11 @@ export default function Movies({
       {isLoading && <Preloader />}
       {!isLoading && !isEmptyList && (
         <>
-          <MoviesCardList movies={movies} isSaved={isSaved} onClick={onClick} />
+          <MoviesCardList
+            movies={movies}
+            savedIdList={savedIdList}
+            onClick={onClick}
+          />
           {pathname === ROUTES.movies && !isEmptyList && (
             <button type="button" className={moreStyle} onClick={showMore}>
               Ещё

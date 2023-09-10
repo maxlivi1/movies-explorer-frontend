@@ -1,5 +1,7 @@
 # movies-explorer-frontend
 
-Адрес репозитория: https://github.com/maxlivi1/movies-explorer-frontend.git
+## Ссылки на проект
 
-## Макет dark-4
+Адрес репозитория: https://github.com/maxlivi1/movies-explorer-frontend.git
+Адрес сайта: https://diploma.maxlivi.ru/movies
+pull request:

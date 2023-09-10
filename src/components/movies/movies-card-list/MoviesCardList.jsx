@@ -3,17 +3,8 @@ import { ROUTES } from "../../../utils/constants";
 import MoviesCard from "../movies-card/MoviesCard";
 import "./MoviesCardList.css";
 
-export default function MoviesCardList({
-  movies,
-  onClick,
-  isSaved,
-}) {
+export default function MoviesCardList({ movies, onClick, savedIdList }) {
   const isSavedMovies = useLocation().pathname === ROUTES.savedMovies;
-
-  const checkSavedMovie = (id) => {
-    if (isSavedMovies) return "saved";
-    if (isSaved(id)) return "searchSaved";
-  };
 
   return (
     <div className="movies-card-list">
@@ -21,8 +12,8 @@ export default function MoviesCardList({
         return (
           <MoviesCard
             movie={movie}
+            savedIdList={savedIdList}
             key={isSavedMovies ? movie._id : movie.id}
-            buttonType={checkSavedMovie(movie.id)}
             onClick={onClick}
           />
         );

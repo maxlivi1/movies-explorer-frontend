@@ -125,7 +125,7 @@ export default function Profile() {
                 type="text"
                 autoComplete="none"
                 name="name"
-                value={name}
+                value={values.name}
                 pattern={REG_EXP.name}
                 required
                 onChange={handleChangeInput}
@@ -141,7 +141,7 @@ export default function Profile() {
                 className="profile__input"
                 type="email"
                 name="email"
-                value={email}
+                value={values.email}
                 pattern={REG_EXP.email}
                 required
                 onChange={handleChangeInput}

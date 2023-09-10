@@ -1,11 +1,20 @@
+import { useEffect } from "react";
 import { useState } from "react";
 import { useLocation, Link } from "react-router-dom";
+import useSavedMovies from "../../../hooks/useSavedMovies";
 import { ROUTES } from "../../../utils/constants";
 import "./MoviesCard.css";
 
-export default function MoviesCard({ movie, buttonType, onClick }) {
+export default function MoviesCard({
+  movie,
+  buttonType,
+  onClick,
+  savedIdList,
+}) {
   const pathname = useLocation().pathname;
   const [btnType, setBtnType] = useState(buttonType);
+  const { isSaved } = useSavedMovies();
+  const isSavedMovies = pathname === ROUTES.savedMovies;
 
   let filmTime = "";
   const time = Number(movie.duration);
@@ -15,16 +24,25 @@ export default function MoviesCard({ movie, buttonType, onClick }) {
     filmTime = `${Math.floor(time / 60)}ч ${time % 60}мин`;
   }
 
+  const checkSavedMovie = (id, idList) => {
+    if (isSavedMovies) return setBtnType("saved");
+    if (isSaved(id, idList)) return setBtnType("searchSaved");
+  };
+
   const imageUrl =
     pathname === ROUTES.savedMovies
       ? movie.image
       : `https://api.nomoreparties.co${movie.image.url}`;
 
   const changeBtnType = () => {
-    onClick(movie);
+    onClick(movie, savedIdList);
     if (btnType === "searchSaved") return setBtnType("");
     if (!btnType) return setBtnType("searchSaved");
   };
+
+  useEffect(() => {
+    checkSavedMovie(movie.id, savedIdList);
+  }, [savedIdList]);
 
   return (
     <div className="movies-card">
