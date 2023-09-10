@@ -7,8 +7,8 @@ import { signout, updateUserInfo } from "../../utils/MainApi";
 import { useFormWithValidation } from "../../hooks/useFormWithValidation";
 import { useEffect } from "react";
 
-export default function Profile({ setLoggedIn }) {
-  const { currentUser, updateCurrentUser } = useAppContext();
+export default function Profile() {
+  const { currentUser, updateCurrentUser, setLoggedIn } = useAppContext();
   const [name, setName] = useState(currentUser.name);
   const [email, setEmail] = useState(currentUser.email);
   const [isEditable, setIsEditable] = useState(false);
@@ -139,7 +139,7 @@ export default function Profile({ setLoggedIn }) {
             {isEditable ? (
               <input
                 className="profile__input"
-                type="text"
+                type="email"
                 name="email"
                 value={email}
                 pattern={REG_EXP.email}

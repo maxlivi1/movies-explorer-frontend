@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useNavigate } from "react-router-dom";
 import { ROUTES } from "../../utils/constants";
 import Footer from "../footer/Footer";
 import Header from "../header/Header";
@@ -30,6 +30,7 @@ export default function App() {
   } = useSavedMovies();
   const { getUserInfoData, getSavedMoviesData } = useAppData();
   const [isOpenMenu, setIsOpenMenu] = useState(false);
+  const navigate = useNavigate();
 
   const openMobileMenu = () => {
     setIsOpenMenu(true);
@@ -66,7 +67,6 @@ export default function App() {
           element={
             <ProtectedRoute
               element={FoundedMovies}
-              loggedIn={loggedIn}
               onSave={saveFilm}
               onDelete={deleteFilm}
               isSaved={isSaved}
@@ -79,25 +79,15 @@ export default function App() {
           element={
             <ProtectedRoute
               element={SavedMovies}
-              loggedIn={loggedIn}
               movies={savedMovies}
               onDelete={deleteFilm}
             />
           }
         ></Route>
         <Route path={ROUTES.notFound} element={<NotFound />} />
-        <Route
-          path={ROUTES.profile}
-          element={<Profile user={currentUser} setLoggedIn={setLoggedIn} />}
-        />
-        <Route
-          path={ROUTES.registration}
-          element={<Register setLoggedIn={setLoggedIn} />}
-        />
-        <Route
-          path={ROUTES.login}
-          element={<Login setLoggedIn={setLoggedIn} />}
-        />
+        <Route path={ROUTES.profile} element={<Profile />} />
+        <Route path={ROUTES.registration} element={<Register />} />
+        <Route path={ROUTES.login} element={<Login />} />
       </Routes>
       <Footer />
       <MobileMenu

@@ -3,10 +3,17 @@ import { MESSAGE_TYPE, ROUTES } from "../../utils/constants";
 import MainForm from "../main-form/MainForm";
 import { register } from "../../utils/MainApi";
 import { useAppContext } from "../../contexts/AppContext";
+import { useEffect } from "react";
 
-export default function Register({ setLoggedIn }) {
-  const { showMessage } = useAppContext();
+export default function Register() {
+  const { showMessage, loggedIn, setLoggedIn } = useAppContext();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (loggedIn) {
+      navigate(ROUTES.main, { replace: true });
+    }
+  }, [loggedIn]);
 
   const registration = ({ name, email, password }) => {
     register({ name, email, password })

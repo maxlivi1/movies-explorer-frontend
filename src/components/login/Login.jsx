@@ -1,12 +1,19 @@
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAppContext } from "../../contexts/AppContext";
 import { MESSAGE_TYPE, ROUTES } from "../../utils/constants";
 import { login } from "../../utils/MainApi";
 import MainForm from "../main-form/MainForm";
 
-export default function Login({ setLoggedIn }) {
-  const { showMessage } = useAppContext();
+export default function Login() {
+  const { showMessage, loggedIn, setLoggedIn } = useAppContext();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (loggedIn) {
+      navigate(ROUTES.main, { replace: true });
+    }
+  }, [loggedIn]);
 
   const loginIn = ({ email, password }) => {
     login({ email, password })

@@ -1,16 +1,20 @@
 import { useMemo } from "react";
+import { useEffect } from "react";
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useFormWithValidation } from "../../hooks/useFormWithValidation";
-import { ROUTES } from "../../utils/constants";
+import { REG_EXP, ROUTES } from "../../utils/constants";
 import Logo from "../header/logo/Logo";
 import "./MainForm.css";
 
 export default function MainForm({ onSubmit }) {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const isRegister = useLocation().pathname === ROUTES.registration;
 
-  const { values, handleChange, isValid } = useFormWithValidation();
+  const { values, getError, handleChange, isValid } = useFormWithValidation();
 
   const getButtonStyle = useMemo(() => {
     let btnStyle = "main-form__register-button";
@@ -23,26 +27,33 @@ export default function MainForm({ onSubmit }) {
     return btnStyle;
   }, [isRegister, isValid]);
 
-  const handleSubmit = async (event) => {
+  const handleSubmit = (event) => {
     event.preventDefault();
     if (isRegister) {
-      await onSubmit({
-        name: values.name,
-        email: values.email,
-        password: values.password,
+      onSubmit({
+        name: name,
+        email: email,
+        password: password,
       });
     } else {
-      await onSubmit({
-        email: values.email,
-        password: values.password,
+      onSubmit({
+        email: email,
+        password: password,
       });
     }
   };
 
   const handleChangeInput = (event) => {
+    const target = event.target;
     handleChange(event);
-    setError(event.target.validationMessage);
+    setError(getError(target));
   };
+
+  useEffect(() => {
+    setName(values.name);
+    setEmail(values.email);
+    setPassword(values.password);
+  }, [values]);
 
   return (
     <section className="main-form">
@@ -65,10 +76,9 @@ export default function MainForm({ onSubmit }) {
                 type="text"
                 className="main-form__form-input"
                 name="name"
-                value={values.name}
+                value={name}
                 onChange={handleChangeInput}
-                minLength={2}
-                maxLength={30}
+                pattern={REG_EXP.name}
                 required
                 autoComplete="none"
               />
@@ -81,8 +91,9 @@ export default function MainForm({ onSubmit }) {
               className="main-form__form-input"
               autoComplete="none"
               name="email"
-              value={values.email}
+              value={email}
               onChange={handleChangeInput}
+              pattern={REG_EXP.email}
               required
             />
           </label>
@@ -93,10 +104,9 @@ export default function MainForm({ onSubmit }) {
               className="main-form__form-input"
               autoComplete="none"
               name="password"
-              value={values.password}
+              value={password}
               onChange={handleChangeInput}
-              minLength={5}
-              maxLength={50}
+              pattern={REG_EXP.password}
               required
             />
           </label>

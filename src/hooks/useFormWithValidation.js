@@ -16,6 +16,9 @@ const useFormWithValidation = () => {
       if (target.name === "email") {
         customError = `Значение поля невалидно. Пример maxim@mail.ru`;
       }
+      if (target.name === "password") {
+        customError = `Значение поля невалидно. Используйте латиницу, цифры, символы, кроме пробела. От 6 до 50 символов.`;
+      }
     }
     return customError;
   };

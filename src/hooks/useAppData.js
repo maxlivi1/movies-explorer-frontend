@@ -1,12 +1,13 @@
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useAppContext } from "../contexts/AppContext";
-import { MESSAGE_TYPE, ROUTES } from "../utils/constants";
+import { MESSAGE_TYPE } from "../utils/constants";
 import { getSavedMovies, getUserInfo } from "../utils/MainApi";
 import { getBeatfilmMovies } from "../utils/MoviesApi";
 
 const useAppData = () => {
   const { setLoggedIn, updateCurrentUser, showMessage, setBeatFilmMovies } =
     useAppContext();
+  const location = useLocation();
   const navigate = useNavigate();
 
   const getUserInfoData = () => {
@@ -14,7 +15,7 @@ const useAppData = () => {
       .then((userData) => {
         setLoggedIn(true);
         updateCurrentUser(userData);
-        navigate(ROUTES.movies, { replace: true });
+        navigate(location.pathname, { replace: true });
       })
       .catch((info) => info)
       .then((infoMessage) => console.log(infoMessage.message))
