@@ -1,6 +1,6 @@
 import { ROUTES } from "./constants";
 
-const baseUrl = "http://localhost:3001";
+const baseUrl = "https://api.diploma.maxlivi.ru";
 
 const checkResponse = (response) => {
   if (response.ok) {
