@@ -3,7 +3,7 @@ import "./Header.css";
 import AccountButton from "./account_button/AccountButton";
 import Navigation from "../navigation/Navigation";
 import { useLocation } from "react-router-dom";
-import { ROUTES } from "../../utils/constants";
+import { ROUTES } from "../../configs/appconfig";
 import BurgerMenu from "./burger-menu/BurgerMenu";
 
 export default function Header({ loggedIn, openMobileMenu, isOpenMenu }) {

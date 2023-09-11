@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useFormWithValidation } from "../../hooks/useFormWithValidation";
-import { REG_EXP, ROUTES } from "../../utils/constants";
+import { REG_EXP, ROUTES } from "../../configs/appconfig";
 import Logo from "../header/logo/Logo";
 import "./MainForm.css";
 

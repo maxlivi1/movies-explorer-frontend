@@ -1,6 +1,6 @@
 import { Navigate } from "react-router-dom";
 import { useAppContext } from "../../contexts/AppContext";
-import { ROUTES } from "../../utils/constants";
+import { ROUTES } from "../../configs/appconfig";
 
 const ProtectedRoute = ({ element: Component, ...props }) => {
   const { loggedIn } = useAppContext();

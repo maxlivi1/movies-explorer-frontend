@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
-import { ROUTES } from "../../utils/constants";
+import { ROUTES} from "../../configs/appconfig";
 import Footer from "../footer/Footer";
 import Header from "../header/Header";
 import Main from "../main/Main";

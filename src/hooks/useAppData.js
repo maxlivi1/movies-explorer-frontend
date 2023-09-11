@@ -1,6 +1,6 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import { useAppContext } from "../contexts/AppContext";
-import { MESSAGE_TYPE } from "../utils/constants";
+import { MESSAGE_TYPE } from "../configs/appconfig";
 import {
   deleteMovie,
   getSavedMovies,

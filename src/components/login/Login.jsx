@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAppContext } from "../../contexts/AppContext";
-import { MESSAGE_TYPE, ROUTES } from "../../utils/constants";
+import { MESSAGE_TYPE, ROUTES } from "../../configs/appconfig";
 import { login } from "../../utils/MainApi";
 import MainForm from "../main-form/MainForm";
 

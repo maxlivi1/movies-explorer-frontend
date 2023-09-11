@@ -1,7 +1,7 @@
 import "./AccountButton.css";
 import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
-import { ROUTES } from "../../../utils/constants";
+import { ROUTES } from "../../../configs/appconfig";
 
 export default function AccountButton({ loggedIn, isOpenMenu, onClose }) {
   const location = useLocation();

@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { MESSAGE_TYPE, ROUTES } from "../../utils/constants";
+import { MESSAGE_TYPE, ROUTES } from "../../configs/appconfig";
 import MainForm from "../main-form/MainForm";
 import { register } from "../../utils/MainApi";
 import { useAppContext } from "../../contexts/AppContext";

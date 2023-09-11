@@ -1,4 +1,4 @@
-import { BASE_URL, ROUTES } from "./constants";
+import { BASE_URL, ROUTES } from "../configs/appconfig";
 
 const checkResponse = (response) => {
   if (response.ok) {

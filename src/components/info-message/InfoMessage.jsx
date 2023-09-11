@@ -1,5 +1,5 @@
 import "./InfoMessage.css";
-import { MESSAGE_TYPE } from "../../utils/constants";
+import { MESSAGE_TYPE } from "../../configs/appconfig";
 import { useAppContext } from "../../contexts/AppContext";
 
 export default function InfoMessage() {

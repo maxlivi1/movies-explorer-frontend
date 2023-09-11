@@ -1,5 +1,5 @@
 import { useLocation } from "react-router-dom";
-import { ROUTES } from "../../utils/constants";
+import { ROUTES } from "../../configs/appconfig";
 import Preloader from "../preloader/Preloader";
 import MoviesCardList from "./movies-card-list/MoviesCardList";
 import "./Movies.css";

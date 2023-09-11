@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { useLocation, Link } from "react-router-dom";
 import useSavedMovies from "../../../hooks/useSavedMovies";
-import { ROUTES } from "../../../utils/constants";
+import { ROUTES } from "../../../configs/appconfig";
 import "./MoviesCard.css";
 
 export default function MoviesCard({

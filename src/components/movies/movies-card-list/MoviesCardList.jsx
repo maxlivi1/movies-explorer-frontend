@@ -1,5 +1,5 @@
 import { useLocation } from "react-router-dom";
-import { ROUTES } from "../../../utils/constants";
+import { ROUTES } from "../../../configs/appconfig";
 import MoviesCard from "../movies-card/MoviesCard";
 import "./MoviesCardList.css";
 

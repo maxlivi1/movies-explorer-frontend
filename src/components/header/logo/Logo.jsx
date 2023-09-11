@@ -1,6 +1,6 @@
 import "./Logo.css";
 import { Link } from "react-router-dom";
-import { ROUTES } from "../../../utils/constants";
+import { ROUTES } from "../../../configs/appconfig";
 
 export default function Logo() {
   return (

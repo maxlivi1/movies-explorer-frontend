@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
-import { ROUTES } from "../utils/constants";
+import { ROUTES } from "../configs/appconfig";
 
 const useMoviesSearch = () => {
   const [moviesList, setMoviesList] = useState([]);

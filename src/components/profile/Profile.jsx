@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { MESSAGE_TYPE, REG_EXP, ROUTES } from "../../utils/constants";
+import { MESSAGE_TYPE, REG_EXP, ROUTES } from "../../configs/appconfig";
 import "./Profile.css";
 import { useAppContext } from "../../contexts/AppContext";
 import { signout, updateUserInfo } from "../../utils/MainApi";
