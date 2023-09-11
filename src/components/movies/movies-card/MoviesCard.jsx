@@ -13,8 +13,12 @@ export default function MoviesCard({
 }) {
   const pathname = useLocation().pathname;
   const [btnType, setBtnType] = useState(buttonType);
+  const [isDisable, setIsDisable] = useState(false);
   const { isSaved } = useSavedMovies();
   const isSavedMovies = pathname === ROUTES.savedMovies;
+  const btnStyle = !isDisable
+    ? "movies-card__btn"
+    : "movies-card__btn movies-card__btn_disabled";
 
   let filmTime = "";
   const time = Number(movie.duration);
@@ -26,7 +30,9 @@ export default function MoviesCard({
 
   const checkSavedMovie = (id, idList) => {
     if (isSavedMovies) return setBtnType("saved");
-    if (isSaved(id, idList)) return setBtnType("searchSaved");
+    const isSavedMovie = isSaved(id, idList);
+    if (isSavedMovie) return setBtnType("searchSaved");
+    if (!isSavedMovie) return setBtnType("");
   };
 
   const imageUrl =
@@ -34,10 +40,12 @@ export default function MoviesCard({
       ? movie.image
       : `https://api.nomoreparties.co${movie.image.url}`;
 
-  const changeBtnType = () => {
-    onClick(movie, savedIdList);
-    if (btnType === "searchSaved") return setBtnType("");
-    if (!btnType) return setBtnType("searchSaved");
+  const onBtnClick = () => {
+    if (isSavedMovies) {
+      onClick(movie, setIsDisable);
+    } else {
+      onClick(movie, savedIdList, setIsDisable);
+    }
   };
 
   useEffect(() => {
@@ -59,11 +67,7 @@ export default function MoviesCard({
           alt={`Картинка к фильму ${movie.nameRU}`}
         />
       </Link>
-      <button
-        type="button"
-        className="movies-card__btn"
-        onClick={changeBtnType}
-      >
+      <button type="button" className={btnStyle} onClick={onBtnClick}>
         {!btnType && "Сохранить"}
         {btnType === "saved" && (
           <svg

@@ -1,9 +1,7 @@
 import { useState } from "react";
 import Movies from "../movies/Movies";
 import useMoviesSearch from "../../hooks/useMoviesSearch";
-import { deleteMovie, saveMovie } from "../../utils/MainApi";
 import { useAppContext } from "../../contexts/AppContext";
-import { MESSAGE_TYPE } from "../../utils/constants";
 import { useEffect } from "react";
 import useLocalStorage from "../../hooks/useLocalStorage";
 import { useAppData } from "../../hooks/useAppData";
@@ -30,8 +28,8 @@ export default function FoundedMovies({
     setIsShorts,
   } = useMoviesSearch();
   const { isSaved } = useSavedMovies();
-  const { showMessage, beatFilmMovies } = useAppContext();
-  const { getBeatfilmMoviesData } = useAppData();
+  const { beatFilmMovies } = useAppContext();
+  const { getBeatfilmMoviesData, saveFilm, deleteFilm } = useAppData();
   const { count, elseCount } = useResize();
 
   const searchFilms = ({ search, shorts }) => {
@@ -43,61 +41,11 @@ export default function FoundedMovies({
     setSearchString(search);
   };
 
-  const saveFilm = (movie) => {
-    saveMovie({
-      country: movie.country,
-      director: movie.director,
-      duration: movie.duration,
-      year: movie.year,
-      description: movie.description,
-      image: `https://api.nomoreparties.co${movie.image.url}`,
-      trailerLink: movie.trailerLink,
-      thumbnail: `https://api.nomoreparties.co${movie.image.formats.thumbnail.url}`,
-      movieId: movie.id,
-      nameRU: movie.nameRU,
-      nameEN: movie.nameEN,
-    })
-      .then((newMovie) => {
-        onSave(newMovie);
-        showMessage({
-          message: "Фильм успешно сохранён",
-          messageType: MESSAGE_TYPE.message,
-        });
-      })
-      .catch((info) => info)
-      .then((infoMessage) => {
-        showMessage({
-          message: infoMessage.message,
-          messageType: MESSAGE_TYPE.error,
-        });
-      })
-      .catch((error) => console.log(error));
-  };
-
-  const deleteFilm = (movie) => {
-    deleteMovie(movie._id)
-      .then((deletedMovie) => {
-        onDelete(deletedMovie);
-        showMessage({
-          message: "Фильм успешно удалён",
-          messageType: MESSAGE_TYPE.message,
-        });
-      })
-      .catch((info) => info)
-      .then((infoMessage) => {
-        showMessage({
-          message: infoMessage.message,
-          messageType: MESSAGE_TYPE.error,
-        });
-      })
-      .catch((error) => console.log(error));
-  };
-
-  const onClick = (movie, idList) => {
+  const onClick = (movie, idList, setIsDisable) => {
     if (isSaved(movie.id, idList)) {
-      deleteFilm(getMovie(movie.id));
+      deleteFilm(getMovie(movie.id), onDelete, setIsDisable);
     } else {
-      saveFilm(movie);
+      saveFilm(movie, onSave, setIsDisable);
     }
   };
 

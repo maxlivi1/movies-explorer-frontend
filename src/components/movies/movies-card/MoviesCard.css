@@ -94,6 +94,11 @@
   transition: opacity 0.3s ease;
 }
 
+.movies-card__btn_disabled {
+  pointer-events: none;
+  cursor: not-allowed;
+}
+
 .movies-card__btn:hover {
   opacity: 0.7;
 }

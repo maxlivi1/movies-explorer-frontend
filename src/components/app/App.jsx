@@ -66,10 +66,10 @@ export default function App() {
           element={
             <ProtectedRoute
               element={FoundedMovies}
-              onSave={saveFilm}
-              onDelete={deleteFilm}
               savedIdList={savedIdList}
               getMovie={getSavedMovie}
+              onSave={saveFilm}
+              onDelete={deleteFilm}
             />
           }
         ></Route>

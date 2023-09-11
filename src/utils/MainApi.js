@@ -1,6 +1,4 @@
-import { ROUTES } from "./constants";
-
-const baseUrl = "https://api.diploma.maxlivi.ru";
+import { BASE_URL, ROUTES } from "./constants";
 
 const checkResponse = (response) => {
   if (response.ok) {
@@ -10,7 +8,7 @@ const checkResponse = (response) => {
 };
 
 const register = ({ name, email, password }) => {
-  return fetch(`${baseUrl}${ROUTES.registration}`, {
+  return fetch(`${BASE_URL}${ROUTES.registration}`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -21,7 +19,7 @@ const register = ({ name, email, password }) => {
 };
 
 const login = ({ email, password }) => {
-  return fetch(`${baseUrl}${ROUTES.login}`, {
+  return fetch(`${BASE_URL}${ROUTES.login}`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -32,19 +30,19 @@ const login = ({ email, password }) => {
 };
 
 const signout = () => {
-  return fetch(`${baseUrl}${ROUTES.signout}`, {
+  return fetch(`${BASE_URL}${ROUTES.signout}`, {
     credentials: "include",
   }).then((response) => checkResponse(response));
 };
 
 const getUserInfo = () => {
-  return fetch(`${baseUrl}${ROUTES.profile}`, {
+  return fetch(`${BASE_URL}${ROUTES.profile}`, {
     credentials: "include",
   }).then((response) => checkResponse(response));
 };
 
 const updateUserInfo = ({ name, email }) => {
-  return fetch(`${baseUrl}${ROUTES.profile}`, {
+  return fetch(`${BASE_URL}${ROUTES.profile}`, {
     method: "PATCH",
     headers: {
       "Content-Type": "application/json",
@@ -55,13 +53,13 @@ const updateUserInfo = ({ name, email }) => {
 };
 
 const getSavedMovies = () => {
-  return fetch(`${baseUrl}${ROUTES.movies}`, {
+  return fetch(`${BASE_URL}${ROUTES.movies}`, {
     credentials: "include",
   }).then((response) => checkResponse(response));
 };
 
 const deleteMovie = (movieId) => {
-  return fetch(`${baseUrl}${ROUTES.movies}/${movieId}`, {
+  return fetch(`${BASE_URL}${ROUTES.movies}/${movieId}`, {
     method: "DELETE",
     headers: {
       "Content-Type": "application/json",
@@ -83,7 +81,7 @@ const saveMovie = ({
   nameRU,
   nameEN,
 }) => {
-  return fetch(`${baseUrl}${ROUTES.movies}`, {
+  return fetch(`${BASE_URL}${ROUTES.movies}`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

@@ -37,6 +37,9 @@ const PROJECTS_LIST = [
   },
 ];
 
+const BASE_URL = "http://localhost:3001";
+// const BASE_URL = "https://api.diploma.maxlivi.ru";
+
 const ROUTES = {
   main: "/",
   movies: "/movies",
@@ -60,4 +63,4 @@ const REG_EXP = {
   password: "^[\\d[a-zA-Z]\\.\\,+\\;:&?\\(\\)*%#=\\-]{6,}$",
 };
 
-export { TECHNOLOGIES, PROJECTS_LIST, ROUTES, MESSAGE_TYPE, REG_EXP };
+export { TECHNOLOGIES, PROJECTS_LIST, ROUTES, MESSAGE_TYPE, REG_EXP, BASE_URL };

@@ -1,9 +1,7 @@
 import Movies from "../movies/Movies";
 import useMoviesSearch from "../../hooks/useMoviesSearch";
 import { useEffect } from "react";
-import { deleteMovie } from "../../utils/MainApi";
-import { useAppContext } from "../../contexts/AppContext";
-import { MESSAGE_TYPE } from "../../utils/constants";
+import { useAppData } from "../../hooks/useAppData";
 
 export default function SavedMovies({ movies, onDelete }) {
   const {
@@ -13,30 +11,16 @@ export default function SavedMovies({ movies, onDelete }) {
     setSearchString,
     setIsShorts,
   } = useMoviesSearch();
-  const { showMessage } = useAppContext();
+
+  const { deleteFilm } = useAppData();
 
   const searchFilms = ({ search, shorts }) => {
     setIsShorts(shorts);
     setSearchString(search);
   };
 
-  const onClick = (movie) => {
-    deleteMovie(movie._id)
-      .then((deletedMovie) => {
-        onDelete(deletedMovie);
-        showMessage({
-          message: "Фильм успешно удалён",
-          messageType: MESSAGE_TYPE.message,
-        });
-      })
-      .catch((info) => info)
-      .then((infoMessage) => {
-        showMessage({
-          message: infoMessage.message,
-          messageType: MESSAGE_TYPE.error,
-        });
-      })
-      .catch((error) => console.log(error));
+  const deleteMovie = (movie, setIsDisable) => {
+    deleteFilm(movie, onDelete, setIsDisable);
   };
 
   useEffect(() => {
@@ -47,7 +31,7 @@ export default function SavedMovies({ movies, onDelete }) {
     <Movies
       movies={searchedMovies}
       onSearch={searchFilms}
-      onClick={onClick}
+      onClick={deleteMovie}
       searchPhrase={searchString}
     />
   );
