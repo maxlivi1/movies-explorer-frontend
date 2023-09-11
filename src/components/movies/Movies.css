@@ -31,6 +31,10 @@
   transition: opacity 0.3s ease;
 }
 
+.movies__btn-more_hide {
+  visibility: hidden;
+}
+
 .movies__btn-more:hover {
   opacity: 0.7;
 }

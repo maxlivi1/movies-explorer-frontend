@@ -29,6 +29,28 @@
   text-align: center;
 }
 
+.profile__info-container {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  position: relative;
+}
+
+.profile__info-container::after {
+  content: attr(data-error);
+  position: absolute;
+  text-align: center;
+  width: 80%;
+  top: 110%;
+  left: 50%;
+  transform: translate(-50%, 0);
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  color: rgba(238, 52, 101, 1);
+}
+
 .profile__info {
   margin: 0 0 17px;
   padding: 0 0 16px;
@@ -39,6 +61,13 @@
   justify-content: space-between;
   align-items: center;
   border-bottom: 1px solid rgba(66, 66, 66, 1);
+}
+
+.profile__info_editable {
+  position: relative;
+  padding: 0;
+  min-height: 30px;
+  border-bottom: none;
 }
 
 .profile__info:nth-of-type(2) {
@@ -57,6 +86,17 @@
   line-height: normal;
 }
 
+.profile__name_editable {
+  padding: 3px;
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translate(0, -50%);
+  border-radius: 5px;
+  border: 1px solid gray;
+  z-index: 1;
+}
+
 .profile__value {
   margin: 0;
   padding: 0;
@@ -70,24 +110,33 @@
 
 .profile__input {
   margin: 0;
-  padding: 0;
+  padding: 10px 65px 10px 5px;
   box-sizing: border-box;
+  display: flex;
   position: relative;
   border: none;
   outline: none;
   background-color: transparent;
+  flex: 1;
+  width: 100%;
 
   font-size: 11px;
   font-style: normal;
   font-weight: 400;
   line-height: normal;
   color: #fff;
-  text-align: right;
+  text-align: left;
+  border-bottom: 1px solid rgba(66, 66, 66, 1);
+
+  transition: all 0.3s ease;
 }
 
 .profile__input:focus {
-  background-color: rgb(56, 58, 59);
+  border-bottom: 1px solid rgba(66, 133, 244, 1);
+}
 
+.profile__input:invalid {
+  border-bottom: 1px solid rgb(196, 30, 80);
 }
 
 .profile__btn-container {
@@ -144,6 +193,17 @@
   color: #fff;
 }
 
+.profile__save-button_type_cancel {
+  color: #000;
+  background: rgb(167, 159, 159);
+}
+
+.profile__save-button_disabled {
+  pointer-events: none;
+  cursor: not-allowed;
+  background: #5c687a;
+}
+
 .profile__btn:hover {
   opacity: 0.7;
 }
@@ -167,6 +227,9 @@
 @media (max-width: 500px) {
   .profile {
     padding: 70px 30px 0;
+  }
+  .profile__info-container::after {
+    font-size: 10px;
   }
   .profile__container {
     width: 100%;

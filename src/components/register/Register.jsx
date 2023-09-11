@@ -1,14 +1,20 @@
 import { useNavigate } from "react-router-dom";
-import { ROUTES } from "../../utils/constants";
+import { ROUTES } from "../../configs/appconfig";
 import MainForm from "../main-form/MainForm";
+import { useAppContext } from "../../contexts/AppContext";
+import { useEffect } from "react";
+import { useAppData } from "../../hooks/useAppData";
 
 export default function Register() {
+  const { loggedIn } = useAppContext();
+  const { registration } = useAppData();
   const navigate = useNavigate();
 
-  const register = (event) => {
-    event.preventDefault();
-    navigate(ROUTES.login, { replace: true });
-  };
+  useEffect(() => {
+    if (loggedIn) {
+      navigate(ROUTES.main, { replace: true });
+    }
+  }, [loggedIn]);
 
-  return <MainForm onSubmit={register} />;
+  return <MainForm onSubmit={registration} />;
 }

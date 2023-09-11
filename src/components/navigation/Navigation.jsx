@@ -1,6 +1,6 @@
 import "./Navigation.css";
 import { Link, useLocation } from "react-router-dom";
-import { ROUTES } from "../../utils/constants";
+import { ROUTES } from "../../configs/appconfig";
 import AccountButton from "../header/account_button/AccountButton";
 
 export default function Navigation({ loggedIn, isOpenMenu, onClose }) {

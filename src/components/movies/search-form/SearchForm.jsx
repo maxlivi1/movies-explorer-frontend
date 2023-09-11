@@ -1,43 +1,50 @@
+import { useEffect } from "react";
 import { useState } from "react";
 import "./SearchForm.css";
 
-export default function SearchForm({ onSearch }) {
-  const [search, setSearch] = useState("");
-  const [isValidInput, setIsValidInput] = useState(false);
-  const [isDisable, setIsDisable] = useState(false);
-  const [isShortsFilmFilter, setIsShortsFilmFilter] = useState(false);
+export default function SearchForm({
+  onSearch,
+  searchPhrase = "",
+  isShortsMovies = false,
+}) {
+  const [search, setSearch] = useState(searchPhrase);
+  const [isShorts, setIsShorts] = useState(isShortsMovies);
+  const [isVisibleError, setIsVisibleError] = useState(false);
 
-  const btnStyle = isDisable
-    ? "search-form__submit search-form__submit_disable"
-    : "search-form__submit";
+  const errorStyle = isVisibleError
+    ? "search-form__error search-form__error_visible"
+    : "search-form__error";
 
-  const searchFilm = async (event) => {
+  const searchFilm = (event) => {
     event.preventDefault();
-    if(!isValidInput) return;
-    setIsDisable(true);
-    await onSearch();
-    setTimeout(() => {
-      setIsDisable(false);
-    }, 1500);
+    if (search.trim().length > 0) {
+      onSearch({ search: search, shorts: isShorts });
+      setIsVisibleError(false);
+    } else {
+      setIsVisibleError(true);
+    }
+  };
+
+  const handleChangeCheckbox = (event) => {
+    setIsShorts(event.target.checked);
+    onSearch({ search: search, shorts: event.target.checked });
   };
 
   const handleChangeInput = (event) => {
-    const v = event.target.value;
-    setSearch(v);
-    if (v.trim().length > 1) {
-      setIsValidInput(true);
-      setIsDisable(false);
-    } else {
-      setIsValidInput(false);
-      setIsDisable(true);
-    }
-    console.log(v.length);
-    console.log(isValidInput);
+    const inputValue = event.target.value;
+    setSearch(inputValue);
   };
+
+  useEffect(() => {
+    if (isVisibleError && search.trim().length > 0) {
+      setIsVisibleError(false);
+    }
+  }, [search]);
 
   return (
     <form className="search-form" onSubmit={searchFilm}>
       <div className="search-form__container">
+        <span className={errorStyle}>Необходимо ввести запрос</span>
         <input
           type="text"
           className="search-form__input"
@@ -45,7 +52,7 @@ export default function SearchForm({ onSearch }) {
           value={search}
           onChange={handleChangeInput}
         />
-        <button type="submit" className={btnStyle}>
+        <button type="submit" className="search-form__submit">
           Поиск
         </button>
       </div>
@@ -53,12 +60,11 @@ export default function SearchForm({ onSearch }) {
         <input
           className="search-form__checkbox"
           type="checkbox"
-          onChange={(event) => {
-            setIsShortsFilmFilter(event.target.checked);
-          }}
+          checked={isShorts}
+          onChange={handleChangeCheckbox}
         />
         <span className="search-form__checkbox-span">
-          {isShortsFilmFilter ? (
+          {isShorts ? (
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="36"

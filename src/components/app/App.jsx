@@ -1,34 +1,36 @@
-import { useState } from "react";
-import { Route, Routes } from "react-router-dom";
-import { ROUTES } from "../../utils/constants";
+import { useState, useEffect } from "react";
+import { Route, Routes, useLocation } from "react-router-dom";
+import { ROUTES } from "../../configs/appconfig";
 import Footer from "../footer/Footer";
 import Header from "../header/Header";
 import Main from "../main/Main";
 import NotFound from "../404/NotFound";
 import "./App.css";
-import MobileMenu from "../mobileMenu/MobileMenu";
-import { moviesSavedList, user } from "../../utils/data";
+import MobileMenu from "../mobile-menu/MobileMenu";
 import Profile from "../profile/Profile";
 import Login from "../login/Login";
 import Register from "../register/Register";
 import SavedMovies from "../saved-movies/SavedMovies";
 import FoundedMovies from "../founded-movies/FoundedMovies";
+import InfoMessage from "../info-message/InfoMessage";
+import { useAppContext } from "../../contexts/AppContext";
+import ProtectedRoute from "../protected-route/ProtectedRoute";
+import useSavedMovies from "../../hooks/useSavedMovies";
+import { useAppData } from "../../hooks/useAppData";
 
 export default function App() {
-  const getIdList = (list) => {
-    const idList = [];
-    list.forEach((movie) => {
-      idList.push(movie.cardId);
-    });
-    return idList;
-  };
-  const [loggedIn, setLoggedIn] = useState(false);
+  const { loggedIn } = useAppContext();
+  const {
+    savedMovies,
+    getSavedMovie,
+    saveNewMovie,
+    deleteMovie,
+    saveAllMovies,
+    savedIdList,
+  } = useSavedMovies();
+  const { getUserInfoData, getSavedMoviesData } = useAppData();
   const [isOpenMenu, setIsOpenMenu] = useState(false);
-  const [savedCardsIdList, setSavedCardsIdList] = useState(
-    getIdList(moviesSavedList)
-  );
-  const [searchMoviesList, setSearchMoviesList] = useState([]);
-  const [savedMovies, setSavedMovies] = useState(moviesSavedList);
+  const pathname = useLocation().pathname;
 
   const openMobileMenu = () => {
     setIsOpenMenu(true);
@@ -36,6 +38,28 @@ export default function App() {
   const closeMobileMenu = () => {
     setIsOpenMenu(false);
   };
+
+  const saveFilm = (movie) => {
+    saveNewMovie(movie);
+  };
+
+  const deleteFilm = (movie) => {
+    deleteMovie(movie);
+  };
+
+  useEffect(() => {
+    if (
+      !loggedIn &&
+      (pathname === ROUTES.login || pathname === ROUTES.registration)
+    ) {
+      return;
+    } else {
+      getUserInfoData();
+    }
+    if (!loggedIn) return;
+
+    getSavedMoviesData(saveAllMovies);
+  }, [loggedIn]);
 
   return (
     <div className="app">
@@ -49,27 +73,29 @@ export default function App() {
         <Route
           path={ROUTES.movies}
           element={
-            <FoundedMovies
-              movies={searchMoviesList}
-              savedCardsIdList={savedCardsIdList}
-              setSearchMoviesList={setSearchMoviesList}
+            <ProtectedRoute
+              element={FoundedMovies}
+              savedIdList={savedIdList}
+              getMovie={getSavedMovie}
+              onSave={saveFilm}
+              onDelete={deleteFilm}
             />
           }
         ></Route>
         <Route
           path={ROUTES.savedMovies}
-          element={<SavedMovies movies={savedMovies} />}
+          element={
+            <ProtectedRoute
+              element={SavedMovies}
+              movies={savedMovies}
+              onDelete={deleteFilm}
+            />
+          }
         ></Route>
         <Route path={ROUTES.notFound} element={<NotFound />} />
-        <Route
-          path={ROUTES.profile}
-          element={<Profile user={user} setLoggedIn={setLoggedIn} />}
-        />
+        <Route path={ROUTES.profile} element={<Profile />} />
         <Route path={ROUTES.registration} element={<Register />} />
-        <Route
-          path={ROUTES.login}
-          element={<Login setLoggedIn={setLoggedIn} />}
-        />
+        <Route path={ROUTES.login} element={<Login />} />
       </Routes>
       <Footer />
       <MobileMenu
@@ -77,6 +103,7 @@ export default function App() {
         isOpenMobileMenu={isOpenMenu}
         onClose={closeMobileMenu}
       />
+      <InfoMessage />
     </div>
   );
 }

@@ -1,6 +1,6 @@
 import "./Footer.css";
 import { useLocation } from "react-router-dom";
-import { ROUTES } from "../../utils/constants";
+import { ROUTES } from "../../configs/appconfig";
 
 export default function Footer() {
   const location = useLocation();

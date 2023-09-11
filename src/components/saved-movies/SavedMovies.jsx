@@ -1,22 +1,38 @@
-import { useState } from "react";
 import Movies from "../movies/Movies";
+import useMoviesSearch from "../../hooks/useMoviesSearch";
+import { useEffect } from "react";
+import { useAppData } from "../../hooks/useAppData";
 
-export default function SavedMovies({ movies, savedCardsIdList }) {
-  const [isLoading, setIsLoading] = useState(false);
+export default function SavedMovies({ movies, onDelete }) {
+  const {
+    searchedMovies,
+    setMoviesList,
+    searchString,
+    setSearchString,
+    setIsShorts,
+  } = useMoviesSearch();
 
-  const searchFilm = () => {
-    setIsLoading(true);
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 1500);
+  const { deleteFilm } = useAppData();
+
+  const searchFilms = ({ search, shorts }) => {
+    setIsShorts(shorts);
+    setSearchString(search);
   };
+
+  const deleteMovie = (movie, setIsDisable) => {
+    deleteFilm(movie, onDelete, setIsDisable);
+  };
+
+  useEffect(() => {
+    setMoviesList(movies);
+  }, [movies]);
+
   return (
     <Movies
-      movies={movies}
-      buttonType={"saved"}
-      savedCardsIdList={savedCardsIdList}
-      isLoading={isLoading}
-      onSearch={searchFilm}
+      movies={searchedMovies}
+      onSearch={searchFilms}
+      onClick={deleteMovie}
+      searchPhrase={searchString}
     />
   );
 }

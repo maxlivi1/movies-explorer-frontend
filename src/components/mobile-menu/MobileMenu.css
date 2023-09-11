@@ -70,6 +70,12 @@
   background-color: transparent;
   outline: none;
   border: none;
+  cursor: pointer;
+
+  transition: opacity 0.3s ease-in;
+}
+.mobile-menu__close-btn:hover {
+  opacity: 0.7;
 }
 
 @media (min-width: 769px) {
