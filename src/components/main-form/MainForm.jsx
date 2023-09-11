@@ -12,34 +12,32 @@ export default function MainForm({ onSubmit }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [isDisable, setIsDisable] = useState(false);
   const isRegister = useLocation().pathname === ROUTES.registration;
 
   const { values, getError, handleChange, isValid } = useFormWithValidation();
+
+  const inputStyle = !isDisable
+    ? "main-form__form-input"
+    : "main-form__form-input main-form__form-input_disabled";
 
   const getButtonStyle = useMemo(() => {
     let btnStyle = "main-form__register-button";
     if (!isRegister) {
       btnStyle = `${btnStyle} main-form__register-button_place_login`;
     }
-    if (!isValid) {
+    if (!isValid || isDisable) {
       btnStyle = `${btnStyle} main-form__register-button_disabled`;
     }
     return btnStyle;
-  }, [isRegister, isValid]);
+  }, [isRegister, isValid, isDisable]);
 
   const handleSubmit = (event) => {
     event.preventDefault();
     if (isRegister) {
-      onSubmit({
-        name: name,
-        email: email,
-        password: password,
-      });
+      onSubmit(name, email, password, setIsDisable);
     } else {
-      onSubmit({
-        email: email,
-        password: password,
-      });
+      onSubmit(email, password, setIsDisable);
     }
   };
 
@@ -74,7 +72,8 @@ export default function MainForm({ onSubmit }) {
               <input
                 id="input-name"
                 type="text"
-                className="main-form__form-input"
+                className={inputStyle}
+                disabled={isDisable}
                 name="name"
                 value={values.name}
                 onChange={handleChangeInput}
@@ -88,7 +87,8 @@ export default function MainForm({ onSubmit }) {
             {"E-mail"}
             <input
               type="email"
-              className="main-form__form-input"
+              className={inputStyle}
+              disabled={isDisable}
               autoComplete="none"
               name="email"
               value={values.email}
@@ -101,7 +101,8 @@ export default function MainForm({ onSubmit }) {
             {"Пароль"}
             <input
               type="password"
-              className="main-form__form-input"
+              className={inputStyle}
+              disabled={isDisable}
               autoComplete="none"
               name="password"
               value={values.password}
@@ -110,6 +111,9 @@ export default function MainForm({ onSubmit }) {
               required
             />
           </label>
+          {isDisable && (
+            <div className="main-form__form-container-overlay"></div>
+          )}
         </fieldset>
         <button className={getButtonStyle} type="submit">
           {isRegister ? "Зарегистрироваться" : "Войти"}

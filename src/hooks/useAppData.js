@@ -5,7 +5,11 @@ import {
   deleteMovie,
   getSavedMovies,
   getUserInfo,
+  login,
+  register,
   saveMovie,
+  signout,
+  updateUserInfo,
 } from "../utils/MainApi";
 import { getBeatfilmMovies } from "../utils/MoviesApi";
 
@@ -14,6 +18,89 @@ const useAppData = () => {
     useAppContext();
   const location = useLocation();
   const navigate = useNavigate();
+
+  const registration = (name, email, password, setIsDisable) => {
+    setIsDisable(true);
+    register({ name: name, email: email, password: password })
+      .then((response) => {
+        showMessage({
+          message: response.message,
+          messageType: MESSAGE_TYPE.message,
+        });
+        setLoggedIn(true);
+      })
+      .catch((info) => info)
+      .then((infoMessage) => {
+        showMessage({
+          message: infoMessage.message,
+          messageType: MESSAGE_TYPE.error,
+        });
+      })
+      .catch((error) => console.log(error))
+      .finally(setIsDisable(false));
+  };
+
+  const loginIn = (email, password, setIsDisable) => {
+    setIsDisable(true);
+    login({ email: email, password: password })
+      .then((response) => {
+        showMessage({
+          message: response.message,
+          messageType: MESSAGE_TYPE.message,
+        });
+        setLoggedIn(true);
+      })
+      .catch((info) => info)
+      .then((infoMessage) => {
+        showMessage({
+          message: infoMessage.message,
+          messageType: MESSAGE_TYPE.error,
+        });
+      })
+      .catch((error) => console.log(error))
+      .finally(setIsDisable(false));
+  };
+
+  const updateUser = (name, email, isWithoutChanges, setIsEditable) => {
+    if (isWithoutChanges()) return;
+    updateUserInfo({ name: name.trim(), email: email.trim() })
+      .then((userData) => {
+        updateCurrentUser({ name: userData.name, email: userData.email });
+        showMessage({
+          message: "Данные пользователя успешно обновлены",
+          messageType: MESSAGE_TYPE.message,
+        });
+        setIsEditable(false);
+      })
+      .catch((info) => info)
+      .then((infoMessage) => {
+        showMessage({
+          message: infoMessage.message,
+          messageType: MESSAGE_TYPE.error,
+        });
+      })
+      .catch((error) => console.log(error));
+  };
+
+  const logout = () => {
+    signout()
+      .then((response) => {
+        showMessage({
+          message: response.message,
+          messageType: MESSAGE_TYPE.message,
+        });
+        setLoggedIn(false);
+        window.localStorage.removeItem("search");
+      })
+      .catch((info) => info)
+      .then((infoMessage) => {
+        showMessage({
+          message: infoMessage.message,
+          messageType: MESSAGE_TYPE.error,
+        });
+      })
+      .catch((error) => console.log(error));
+  };
 
   const getUserInfoData = () => {
     getUserInfo()
@@ -108,11 +195,15 @@ const useAppData = () => {
   };
 
   return {
+    registration,
+    loginIn,
+    logout,
     getUserInfoData,
     getSavedMoviesData,
     getBeatfilmMoviesData,
     saveFilm,
     deleteFilm,
+    updateUser,
   };
 };
 

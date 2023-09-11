@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import { Route, Routes } from "react-router-dom";
-import { ROUTES} from "../../configs/appconfig";
+import { Route, Routes, useLocation } from "react-router-dom";
+import { ROUTES } from "../../configs/appconfig";
 import Footer from "../footer/Footer";
 import Header from "../header/Header";
 import Main from "../main/Main";
@@ -30,6 +30,7 @@ export default function App() {
   } = useSavedMovies();
   const { getUserInfoData, getSavedMoviesData } = useAppData();
   const [isOpenMenu, setIsOpenMenu] = useState(false);
+  const pathname = useLocation().pathname;
 
   const openMobileMenu = () => {
     setIsOpenMenu(true);
@@ -47,8 +48,16 @@ export default function App() {
   };
 
   useEffect(() => {
-    getUserInfoData();
+    if (
+      !loggedIn &&
+      (pathname === ROUTES.login || pathname === ROUTES.registration)
+    ) {
+      return;
+    } else {
+      getUserInfoData();
+    }
     if (!loggedIn) return;
+
     getSavedMoviesData(saveAllMovies);
   }, [loggedIn]);
 

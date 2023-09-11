@@ -1,20 +1,21 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { MESSAGE_TYPE, REG_EXP, ROUTES } from "../../configs/appconfig";
+import { REG_EXP, ROUTES } from "../../configs/appconfig";
 import "./Profile.css";
 import { useAppContext } from "../../contexts/AppContext";
-import { signout, updateUserInfo } from "../../utils/MainApi";
+
 import { useFormWithValidation } from "../../hooks/useFormWithValidation";
 import { useEffect } from "react";
+import { useAppData } from "../../hooks/useAppData";
 
 export default function Profile() {
-  const { currentUser, updateCurrentUser, setLoggedIn } = useAppContext();
+  const { currentUser, loggedIn } = useAppContext();
   const [name, setName] = useState(currentUser.name);
   const [email, setEmail] = useState(currentUser.email);
   const [isEditable, setIsEditable] = useState(false);
   const [isDisabled, setIsDisabled] = useState(true);
   const [error, setError] = useState("");
-  const { showMessage } = useAppContext();
+  const { updateUser, logout } = useAppData();
 
   const navigate = useNavigate();
   const { values, getError, handleChange, isValid, setValues } =
@@ -47,25 +48,8 @@ export default function Profile() {
     setError(getError(target));
   };
 
-  const save = () => {
-    if (isWithoutChanges()) return;
-    updateUserInfo({ name: name.trim(), email: email.trim() })
-      .then((userData) => {
-        updateCurrentUser({ name: userData.name, email: userData.email });
-        showMessage({
-          message: "Данные пользователя успешно обновлены",
-          messageType: MESSAGE_TYPE.message,
-        });
-        setIsEditable(false);
-      })
-      .catch((info) => info)
-      .then((infoMessage) => {
-        showMessage({
-          message: infoMessage.message,
-          messageType: MESSAGE_TYPE.error,
-        });
-      })
-      .catch((error) => console.log(error));
+  const saveUserInfo = () => {
+    updateUser(name, email, isWithoutChanges, setIsEditable);
   };
 
   const edit = () => {
@@ -76,27 +60,6 @@ export default function Profile() {
 
   const cancel = () => {
     setIsEditable(false);
-  };
-
-  const logout = () => {
-    signout()
-      .then((response) => {
-        showMessage({
-          message: response.message,
-          messageType: MESSAGE_TYPE.message,
-        });
-        setLoggedIn(false);
-        window.localStorage.removeItem("search");
-        navigate(ROUTES.main, { replace: true });
-      })
-      .catch((info) => info)
-      .then((infoMessage) => {
-        showMessage({
-          message: infoMessage.message,
-          messageType: MESSAGE_TYPE.error,
-        });
-      })
-      .catch((error) => console.log(error));
   };
 
   useEffect(() => {
@@ -111,6 +74,12 @@ export default function Profile() {
       setIsDisabled(true);
     }
   }, [name, email, isValid]);
+
+  useEffect(() => {
+    if (!loggedIn) {
+      navigate(ROUTES.main, { replace: true });
+    }
+  }, [loggedIn]);
 
   return (
     <section className="profile">
@@ -156,7 +125,11 @@ export default function Profile() {
         <div className="profile__btn-container">
           {isEditable ? (
             <>
-              <button className={submitStyle} type="button" onClick={save}>
+              <button
+                className={submitStyle}
+                type="button"
+                onClick={saveUserInfo}
+              >
                 Сохранить
               </button>
               <button
